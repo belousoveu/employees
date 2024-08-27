@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Employees</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+<body>
+<h1>Сотрудники</h1>
+
+<a th:href="@{/employees/list}" class="btn btn-primary">Список сотрудников</a>
+<a th:href="@{/employees/add}" class="btn btn-success">Добавить сотрудника</a>
+<a th:href="@{/employees/search}" class="btn btn-warning">Найти сотрудника</a>
+<a th:href="@{/employees/delete}" class="btn btn-danger">Удалить сотрудника</a>
+
+
+<h4><a th:href="@{/}">Вернуться на главную</a></h4>
+
+</body>
+</html>

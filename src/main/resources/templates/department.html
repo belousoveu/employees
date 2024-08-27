@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Departments</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+<body>
+<h1>Отделы</h1>
+<div>
+    <table class="table table-striped table-bordered ">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Наименование отдела</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="department : ${departments}">
+            <td th:text="${department.getId()}"></td>
+            <td th:text="${department.getName()}"></td>
+            <td><a th:href="@{/departments/edit/{id}(id=${department.getId()})}" class="btn btn-primary">Изменить</a>
+                <a th:href="@{/departments/delete/{id}(id=${department.getId()})}" class="btn btn-danger">Удалить</a></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<div>
+    <a th:href="@{/departments/add}" class="btn btn-primary">Добавить</a>
+</div>
+
+<h6><a th:href="@{/}">Вернуться на главную</a></h6>
+</body>
+</html>

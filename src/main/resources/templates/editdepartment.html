@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Departments</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+<body>
+<h1>Добавление нового отдела</h1>
+<form method="post" action="#" th:action="@{/departments/update}" th:object="${department}">
+    <div class="form-group">
+        <input type="hidden" th:field="*{id}" id="id">
+        <label for="name">Наименование отдела</label>
+        <input type="text" class="form-control" th:field="*{name}" id="name" required="required">
+        <hr>
+        <button type="submit" class="btn btn-primary">Сохранить</button>
+    </div>
+</form>
+<hr>
+<h6><a th:href="@{/}">Вернуться на главную</a></h6>
+
+</body>
+</html>
