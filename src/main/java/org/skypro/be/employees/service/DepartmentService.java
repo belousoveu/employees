@@ -14,4 +14,8 @@ public interface DepartmentService {
     List<Department> getDepartments();
 
     Department getDepartment(Long id);
+
+    static List<Department> getAllDepartments() {
+        return new DepartmentServiceImp().getDepartments();
+    }
 }

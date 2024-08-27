@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>DataOfEmployee</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+<body>
+<h1>Сведения о сотруднике</h1>
+
+<div>
+    <table class="table table-striped table-bordered ">
+        <thead>
+        <tr>
+            <th>Параметр</th>
+            <th>Значение</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>Фамилия</td>
+            <td th:text="${employee.getLastName()}"></td>
+        </tr>
+        <tr>
+            <td>Имя</td>
+            <td th:text="${employee.getFirstName()}"></td>
+        </tr>
+        <tr>
+            <td>E-mail</td>
+            <td th:text="${employee.getEmail()}"></td>
+        </tr>
+        <tr>
+            <td>Пол</td>
+            <td th:text="${employee.getGender()}"></td>
+        </tr>
+        <tr>
+            <td>Возраст</td>
+            <td th:text="${employee.getAge()}"></td>
+        </tr>
+        <tr>
+            <td>Оклад</td>
+            <td th:text="${employee.getSalary()}"></td>
+        </tr>
+        <tr>
+            <td>Отдел</td>
+            <td th:text="${department.getName()}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<a th:href="@{/employees/{id}/edit(id=${employee.getId()})}" class="btn btn-primary">Изменить</a>
+<a th:href="@{/employees/{id}/delete(id=${employee.getId()})}" class="btn btn-danger">Удалить сотрудника</a>
+
+<hr>
+<h6><a th:href="@{/}">Вернуться на главную</a></h6>
+
+</body>
+</html>

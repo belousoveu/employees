@@ -2,24 +2,31 @@ package org.skypro.be.employees.repository;
 
 public class Employee {
     private static long currentId = 0;
-    long id;
+    Long id;
     String firstName;
     String lastName;
     String email;
-    String sex;
+    String gender;
     int age;
     int salary;
-    int departmentId;
+    Long departmentId;
 
-    private Employee(String firstName, String lastName, String email, String sex, int age, int salary, int departmentId) {
+    public Employee() {
+    }
+
+    private Employee(String firstName, String lastName, String email, String gender, int age, int salary, Long departmentId) {
         this.id = ++currentId;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
-        this.sex = sex;
+        this.gender = gender;
         this.age = age;
         this.salary = salary;
         this.departmentId = departmentId;
+    }
+
+    public Long getId() {
+        return id;
     }
 
     public String getFirstName() {
@@ -46,12 +53,12 @@ public class Employee {
         this.email = email;
     }
 
-    public String getSex() {
-        return sex;
+    public String getGender() {
+        return gender;
     }
 
-    public void setSex(String sex) {
-        this.sex = sex;
+    public void setGender(String gender) {
+        this.gender = gender;
     }
 
     public int getAge() {
@@ -70,22 +77,26 @@ public class Employee {
         this.salary = salary;
     }
 
-    public int getDepartmentId() {
+    public Long getDepartmentId() {
         return departmentId;
     }
 
-    public void setDepartmentId(int departmentId) {
+    public void setDepartmentId(Long departmentId) {
         this.departmentId = departmentId;
+    }
+
+    public String getFullName() {
+        return lastName + " " + firstName;
     }
 
     public static class Builder {
         private final String firstName;
         private final String lastName;
         private String email;
-        private String sex;
+        private String gender;
         private int age;
         private int salary;
-        private int departmentId;
+        private Long departmentId;
 
         public Builder(String firstName, String lastName) {
             this.firstName = firstName;
@@ -97,8 +108,8 @@ public class Employee {
             return this;
         }
 
-        public Builder sex(String sex) {
-            this.sex = sex;
+        public Builder gender(String gender) {
+            this.gender = gender;
             return this;
         }
 
@@ -112,13 +123,13 @@ public class Employee {
             return this;
         }
 
-        public Builder departmentId(int departmentId) {
+        public Builder departmentId(Long departmentId) {
             this.departmentId = departmentId;
             return this;
         }
 
         public Employee build() {
-            return new Employee(firstName, lastName, email, sex, age, salary, departmentId);
+            return new Employee(firstName, lastName, email, gender, age, salary, departmentId);
         }
 
     }
