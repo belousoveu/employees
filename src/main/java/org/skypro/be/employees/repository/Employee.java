@@ -1,5 +1,10 @@
 package org.skypro.be.employees.repository;
 
+import org.springframework.stereotype.Component;
+
+import java.util.Objects;
+
+@Component
 public class Employee {
     private static long currentId = 0;
     Long id;
@@ -23,6 +28,35 @@ public class Employee {
         this.age = age;
         this.salary = salary;
         this.departmentId = departmentId;
+    }
+
+//    public Employee (EmployeeDto employee) {
+//        this.id = ++currentId;
+//        this.firstName = employee.getFirstName();
+//        this.lastName = employee.getLastName();
+//        this.email = employee.getEmail();
+//        this.gender = employee.getGender();
+//        this.age = employee.getAge();
+//        this.salary = employee.getSalary();
+//        this.departmentId = employee.getDepartmentId();
+//    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Employee employee = (Employee) o;
+        return Objects.equals(id, employee.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(id);
+    }
+
+    @Override
+    public String toString() {
+        return this.getFullName();
     }
 
     public Long getId() {

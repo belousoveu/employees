@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 </head>
 <body>
-<h1>Добавление нового сотрудника</h1>
+<h1 th:text="*{title}"></h1>
 <hr>
 <form method="post" action="#" th:action="@{/employees/save}" th:object="${employee}">
     <div class="form-group">
@@ -36,7 +36,7 @@
         </div>
         <div>
             <label for="departmentId">Department</label>
-            <select class="form-control" th:field="*{departmentId}" id="departmentId">
+            <select class="form-control" th:field="*{departmentId}" id="departmentId" required="required">
                 <option value=0>Select Department</option>
                 <option th:each="department : ${departments}"
                         th:value="${department.getId()}"

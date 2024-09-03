@@ -1,6 +1,6 @@
 package org.skypro.be.employees.controller;
 
-import org.skypro.be.employees.repository.Department;
+import org.skypro.be.employees.repository.DepartmentDto;
 import org.skypro.be.employees.service.DepartmentService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -29,27 +29,25 @@ public class DepartmentController {
     @PostMapping("/add")
     public String saveDepartment(@RequestParam("name") String name, Model model) {
         departmentService.addDepartment(name);
-        model.addAttribute("departments", departmentService.getDepartments());
-        return "department";
+        return "redirect:/departments";
     }
 
     @GetMapping("/edit/{id}")
     public String editDepartmentPage(@PathVariable("id") Long id, Model model) {
-        model.addAttribute("department", departmentService.getDepartment(id));
+        DepartmentDto departmentDto = new DepartmentDto(departmentService.getDepartment(id));
+        model.addAttribute("department", departmentDto);
         return "editdepartment";
     }
 
     @PostMapping("/update")
-    public String updateDepartment(@ModelAttribute("department") Department department, Model model) {
+    public String updateDepartment(@ModelAttribute("department") DepartmentDto department, Model model) {
         departmentService.updateDepartment(department);
-        model.addAttribute("departments", departmentService.getDepartments());
-        return "department";
+        return "redirect:/departments";
     }
 
     @GetMapping("/delete/{id}")
     public String deleteDepartment(@PathVariable("id") Long id, Model model) {
         departmentService.deleteDepartment(id);
-        model.addAttribute("departments", departmentService.getDepartments());
-        return "department";
+        return "redirect:/departments";
     }
 }

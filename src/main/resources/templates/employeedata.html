@@ -25,19 +25,19 @@
             <td>Имя</td>
             <td th:text="${employee.getFirstName()}"></td>
         </tr>
-        <tr>
+        <tr th:if="${employee.getEmail() != null}">
             <td>E-mail</td>
             <td th:text="${employee.getEmail()}"></td>
         </tr>
-        <tr>
+        <tr th:if="${employee.getGender() != null}">
             <td>Пол</td>
             <td th:text="${employee.getGender()}"></td>
         </tr>
-        <tr>
+        <tr th:if="${employee.getAge() >0}">
             <td>Возраст</td>
             <td th:text="${employee.getAge()}"></td>
         </tr>
-        <tr>
+        <tr th:if="${employee.getSalary() >0}">
             <td>Оклад</td>
             <td th:text="${employee.getSalary()}"></td>
         </tr>

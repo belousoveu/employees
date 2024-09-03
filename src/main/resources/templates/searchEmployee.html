@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>ListOfEmployees</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+<body>
+<h1 th:text="${title + ' сотрудника по фамилии и имени'}"></h1>
+<div class="container">
+    <form method="post" th:action="@{/employees/search}">
+        <div class="form-group">
+            <label for="firstname">Имя : </label>
+            <input type="text" class="form-control" name="firstName" id="firstname" required="required">
+            <label for="lastname">Фамилия : </label>
+            <input type="text" class="form-control" name="lastName" id="lastname" required="required">
+            <div th:if="${title == 'Поиск'}">
+                <button type="submit" name="action" value="search" class="btn btn-primary">Найти</button>
+            </div>
+            <div th:if="${title == 'Удаление'}">
+                <button type="submit" name="action" value="delete" class="btn btn-danger">Удалить</button>
+            </div>
+
+        </div>
+    </form>
+</div>
+
+<hr>
+<h6><a th:href="@{/}">Вернуться на главную</a></h6>
+
+</body>
+</html>

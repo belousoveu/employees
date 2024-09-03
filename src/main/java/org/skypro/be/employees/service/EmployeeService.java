@@ -1,14 +1,15 @@
 package org.skypro.be.employees.service;
 
 import org.skypro.be.employees.repository.Employee;
+import org.skypro.be.employees.repository.EmployeeDto;
 
 import java.util.List;
 
 public interface EmployeeService {
 
-    void addEmployee(Employee employee);
+    Employee addEmployee(EmployeeDto employee);
 
-    void deleteEmployee(String firstName, String lastName);
+    Employee deleteEmployeeByName(String firstName, String lastName);
 
     Employee findEmployeeByName(String firstName, String lastName);
 
@@ -17,4 +18,7 @@ public interface EmployeeService {
     List<Employee> getEmployees();
 
 
+    Employee updateEmployee(EmployeeDto employee);
+
+    Employee deleteEmployee(Long id);
 }
