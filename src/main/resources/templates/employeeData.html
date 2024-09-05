@@ -30,7 +30,7 @@
             <td>Имя</td>
             <td th:text="${employee.getFirstName()}"></td>
         </tr>
-        <tr th:if="${employee.getEmail() != null}">
+        <tr th:if="${employee.getEmail()!= null && !#strings.isEmpty(employee.getEmail())}">
             <td>E-mail</td>
             <td th:text="${employee.getEmail()}"></td>
         </tr>

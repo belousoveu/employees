@@ -32,7 +32,7 @@ public class DepartmentController {
 
     @PostMapping("/add")
     public String saveDepartment(@Valid @ModelAttribute("department") DepartmentDto department,
-                                 BindingResult bindingResult, RedirectAttributes redirectAttributes, Model model) {
+                                 BindingResult bindingResult, RedirectAttributes redirectAttributes) {
         if (bindingResult.hasErrors()) {
             return "newDepartment";
         }
@@ -49,7 +49,7 @@ public class DepartmentController {
 
     @PostMapping("/update")
     public String updateDepartment(@Valid @ModelAttribute("department") DepartmentDto department,
-                                   BindingResult bindingResult, RedirectAttributes redirectAttributes, Model model) {
+                                   BindingResult bindingResult, RedirectAttributes redirectAttributes) {
         if (bindingResult.hasErrors()) {
             return "editDepartment";
         }
@@ -58,7 +58,7 @@ public class DepartmentController {
     }
 
     @GetMapping("/{id}/delete")
-    public String deleteDepartment(@PathVariable("id") Long id, RedirectAttributes redirectAttributes, Model model) {
+    public String deleteDepartment(@PathVariable("id") Long id, RedirectAttributes redirectAttributes) {
         redirectAttributes.addFlashAttribute("deletedDepartment", departmentService.deleteDepartment(id));
         return "redirect:/departments";
     }

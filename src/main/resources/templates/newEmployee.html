@@ -11,37 +11,55 @@
 <form method="post" action="#" th:action="@{/employees/save}" th:object="${employee}">
     <div class="form-group">
         <input type="hidden" th:field="*{id}" id="id">
-        <label for="firstname">Имя : </label>
-        <input type="text" class="form-control" th:field="*{firstName}" id="firstname" required="required">
-        <label for="lastname">Фамилия : </label>
-        <input type="text" class="form-control" th:field="*{lastName}" id="lastname" required="required">
-        <label for="email">Адрес электронной почты : </label>
-        <input type="email" class="form-control" th:field="*{email}" id="email" pattern="^[^\s()<>@,;:\/]+@\w[\w\.-]+\.[a-z]{2,}$">
-        <label>Пол : </label>
-        <div class="form-check">
-            <input type="radio" class="form-check-input" th:field="*{gender}" value="Муж." id="male">
-            <label class="form-check-label" for="male">Муж.</label>
+        <div>
+            <label for="firstname">Имя : </label>
+            <input type="text" class="form-control" th:field="*{firstName}" id="firstname" required="required">
+            <span style="color:red" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></span>
         </div>
-        <div class="form-check">
-            <input type="radio" class="form-check-input" th:field="*{gender}" value="Жен." id="female">
-            <label class="form-check-label" for="female">Жен.</label>
+        <div>
+            <label for="lastname">Фамилия : </label>
+            <input type="text" class="form-control" th:field="*{lastName}" id="lastname" required="required">
+            <span style="color:red" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></span>
+        </div>
+        <div>
+            <label for="email">Адрес электронной почты : </label>
+            <input type="email" class="form-control" th:field="*{email}" id="email"
+                   pattern="^[^\s()<>@,;:\/]+@\w[\w\.-]+\.[a-z]{2,}$">
+            <span style="color:red" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
+        </div>
+        <div>
+            <label>Пол : </label>
+            <div class="form-check">
+                <input type="radio" class="form-check-input" th:field="*{gender}" value="Муж." id="male">
+                <label class="form-check-label" for="male">Муж.</label>
+            </div>
+            <div class="form-check">
+                <input type="radio" class="form-check-input" th:field="*{gender}" value="Жен." id="female">
+                <label class="form-check-label" for="female">Жен.</label>
+            </div>
         </div>
         <div>
             <label for="age">Возраст : </label>
-            <input type="text" class="form-control" th:field="*{age}" id="age" pattern="\d+" title="Неверный формат. Нужно ввести положительное целое число">
+            <input type="text" class="form-control" th:field="*{age}" id="age" pattern="\d+"
+                   title="Неверный формат. Нужно ввести положительное целое число">
+            <span style="color:red" th:if="${#fields.hasErrors('age')}" th:errors="*{age}"></span>
         </div>
         <div>
             <label for="salary">Заработная плата : </label>
-            <input type="text" class="form-control" th:field="*{salary}" id="salary" pattern="\d+" title="Неверный формат. Нужно ввести положительное целое число">
+            <input type="text" class="form-control" th:field="*{salary}" id="salary" pattern="\d+"
+                   title="Неверный формат. Нужно ввести положительное целое число">
+            <span style="color:red" th:if="${#fields.hasErrors('salary')}" th:errors="*{salary}"></span>
         </div>
         <div>
             <label for="departmentId">Department</label>
-            <select class="form-control" th:field="*{departmentId}" id="departmentId" required="required">
+            <select class="form-control" th:field="*{departmentId}" id="departmentId" required>
                 <option value=0>Select Department</option>
                 <option th:each="department : ${departments}"
                         th:value="${department.getId()}"
-                        th:text="${department.getName()}">Department Name</option>
+                        th:text="${department.getName()}">Department Name
+                </option>
             </select>
+            <div style="color:red" th:if="${#fields.hasErrors('departmentId')}" th:errors="*{departmentId}"></div>
         </div>
         <hr>
         <button type="submit" class="btn btn-primary">Сохранить</button>
@@ -49,9 +67,7 @@
 </form>
 <hr>
 
-
-
-
+<h6><a th:href="@{/employees}">Список сотрудников</a></h6>
 <h6><a th:href="@{/}">Вернуться на главную</a></h6>
 
 </body>

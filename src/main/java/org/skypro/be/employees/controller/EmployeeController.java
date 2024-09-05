@@ -1,11 +1,13 @@
 package org.skypro.be.employees.controller;
 
+import jakarta.validation.Valid;
 import org.skypro.be.employees.repository.Employee;
 import org.skypro.be.employees.repository.EmployeeDto;
 import org.skypro.be.employees.service.DepartmentService;
 import org.skypro.be.employees.service.EmployeeService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -36,7 +38,13 @@ public class EmployeeController extends MainController {
     }
 
     @PostMapping("/save")
-    public String saveEmployee(@ModelAttribute("employee") EmployeeDto employee, RedirectAttributes redirectAttributes) {
+    public String saveEmployee(@Valid @ModelAttribute("employee") EmployeeDto employee,
+                               BindingResult bindingResult, RedirectAttributes redirectAttributes, Model model) {
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("employee", employee);
+            model.addAttribute("departments", departmentService.getDepartments());
+            return "newEmployee";
+        }
         if (employee.getId() == null) {
             Employee resultEmployee = employeeService.addEmployee(employee);
             redirectAttributes.addFlashAttribute("newEmployee", resultEmployee);

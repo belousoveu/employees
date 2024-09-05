@@ -1,16 +1,35 @@
 package org.skypro.be.employees.repository;
 
+import jakarta.validation.constraints.*;
 import org.springframework.stereotype.Component;
 
 @Component
 public class EmployeeDto {
     Long id;
+
+    @NotBlank(message = "Поле 'Имя' не может быть пустым")
+    @Pattern(regexp = "^[а-яА-Я]+$", message = "Поле 'Имя' может состоять только из букв")
+    @Size(min = 2, max = 50, message = "Поле 'Имя' должно содержать от 2 до 50 символов")
     String firstName;
+
+    @NotBlank(message = "Поле 'Фамилия' не может быть пустым")
+    @Pattern(regexp = "^[а-яА-Я- ]+$", message = "Поле 'Фамилия' может состоять только из букв")
+    @Size(min = 2, max = 50, message = "Поле 'Фамилия' должно содержать от 2 до 50 символов")
     String lastName;
+
+    @Pattern(regexp = "^$|^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$",
+            message = "Поле 'Email' не соответствует шаблону")
     String email;
+
     String gender;
+    @PositiveOrZero(message = "Поле 'Возраст' должно содержать положительное число")
     int age;
+
+    @PositiveOrZero(message = "Поле 'Заработная плата' должно содержать положительное число")
     int salary;
+
+    @NotNull(message = "Поле 'Отдел' не может быть пустым")
+    @Min(value = 1, message = "Поле 'Отдел' не может быть пустым")
     Long departmentId;
 
     public EmployeeDto() {
