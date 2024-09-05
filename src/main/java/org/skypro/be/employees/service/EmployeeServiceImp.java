@@ -17,18 +17,18 @@ public class EmployeeServiceImp implements EmployeeService {
     private static final Map<Long, Employee> employees = new HashMap<>(LIMIT_EMPLOYEES);
 
     static {
-        employees.put(1L, new Employee.Builder("Сергей","Васильев").departmentId(1L).build());
-        employees.put(2L, new Employee.Builder("Екатерина","Воронцова").email("vorontcova@name.org").departmentId(2L).salary(120000).build());
-        employees.put(3L, new Employee.Builder("Владимир","Иванов").departmentId(2L).build());
-        employees.put(4L, new Employee.Builder("Иван","Иванов").departmentId(3L).build());
-        employees.put(5L, new Employee.Builder("Ольга","Волкова").departmentId(4L).build());
+        employees.put(1L, new Employee.Builder("Сергей", "Васильев").departmentId(1L).build());
+        employees.put(2L, new Employee.Builder("Екатерина", "Воронцова").email("vorontcova@name.org").departmentId(2L).salary(120000).build());
+        employees.put(3L, new Employee.Builder("Владимир", "Иванов").departmentId(2L).build());
+        employees.put(4L, new Employee.Builder("Иван", "Иванов").departmentId(3L).build());
+        employees.put(5L, new Employee.Builder("Ольга", "Волкова").departmentId(4L).build());
     }
 
     public EmployeeServiceImp() {
 
     }
 
-    public Employee  addEmployee(EmployeeDto employee) {
+    public Employee addEmployee(EmployeeDto employee) {
         if (employees.size() >= LIMIT_EMPLOYEES) {
             throw new EmployeeStorageIsFullException("Превышен лимит сотрудников в фирме");
         }
@@ -52,7 +52,7 @@ public class EmployeeServiceImp implements EmployeeService {
         return employees.remove(employee.getId());
     }
 
-    public Employee deleteEmployee(Long id){
+    public Employee deleteEmployee(Long id) {
         if (!employees.containsKey(id)) {
             throw new EmployeeNotFoundException("Сотрудник не найден");
         }

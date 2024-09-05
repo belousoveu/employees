@@ -10,7 +10,8 @@ public class GlobalExceptionHandler {
     @ExceptionHandler({EmployeeNotFoundException.class,
             EmployeeAlreadyExistsException.class,
             EmployeeStorageIsFullException.class,
-            DepartmentNotFoundException.class})
+            DepartmentNotFoundException.class,
+            UnableDepartmentDeleteException.class})
     public ResponseEntity<String> handleEmployeeException(Exception e) {
         return ResponseEntity.badRequest().body(e.getMessage());
     }

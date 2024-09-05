@@ -2,7 +2,7 @@
 <html lang="ru" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Departments</title>
+    <title>EditDepartment</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 </head>
 <body>
@@ -12,6 +12,7 @@
         <input type="hidden" th:field="*{id}" id="id">
         <label for="name">Наименование отдела</label>
         <input type="text" class="form-control" th:field="*{name}" id="name" required="required">
+        <span style="color:red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
         <hr>
         <button type="submit" class="btn btn-primary">Сохранить</button>
     </div>

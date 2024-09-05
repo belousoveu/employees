@@ -2,21 +2,27 @@ package org.skypro.be.employees.service;
 
 import org.skypro.be.employees.repository.Department;
 import org.skypro.be.employees.repository.DepartmentDto;
+import org.skypro.be.employees.repository.Employee;
 
 import java.util.List;
+import java.util.Map;
 
 public interface DepartmentService {
-    void addDepartment(String name);
+    Department addDepartment(DepartmentDto department);
 
-    void deleteDepartment(Long id);
+    Department deleteDepartment(Long id);
 
-    void updateDepartment(DepartmentDto department);
+    Department updateDepartment(DepartmentDto department);
 
     List<Department> getDepartments();
 
     Department getDepartment(Long id);
 
-//    static List<Department> getAllDepartments() {
-//        return new DepartmentServiceImp().getDepartments();
-//    }
+    List<Employee> getEmployeesOfDepartment(Long id);
+
+    Map<String, List<Employee>> getEmployeesByDepartments();
+
+    Employee getEmployeeWithMinSalaryOfDepartment(Long id);
+
+    Employee getEmployeeWithMaxSalaryOfDepartment(Long id);
 }

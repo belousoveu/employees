@@ -1,11 +1,15 @@
 package org.skypro.be.employees.repository;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 import org.springframework.stereotype.Component;
 
 @Component
 public class DepartmentDto {
     private Long id;
+
+    @NotBlank(message = "Наименование отдела не может быть пустым")
+    @Pattern(regexp = "^[А-Яа-я0-9- ]+$", message = "Наименование отдела содержит недопустимые символы")
     private String name;
 
     public DepartmentDto() {

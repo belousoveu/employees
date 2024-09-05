@@ -32,12 +32,11 @@ public class EmployeeController extends MainController {
         model.addAttribute("title", "Добавление нового сотрудника");
         model.addAttribute("employee", new Employee());
         model.addAttribute("departments", departmentService.getDepartments());
-        return "newemployee";
+        return "newEmployee";
     }
 
     @PostMapping("/save")
     public String saveEmployee(@ModelAttribute("employee") EmployeeDto employee, RedirectAttributes redirectAttributes) {
-//        Employee resultEmployee;
         if (employee.getId() == null) {
             Employee resultEmployee = employeeService.addEmployee(employee);
             redirectAttributes.addFlashAttribute("newEmployee", resultEmployee);
@@ -45,14 +44,7 @@ public class EmployeeController extends MainController {
             Employee resultEmployee = employeeService.updateEmployee(employee);
             redirectAttributes.addFlashAttribute("updatedEmployee", resultEmployee);
         }
-
         return "redirect:/employees";
-    }
-
-    @GetMapping("/list")
-    public String listEmployees(Model model) {
-        model.addAttribute("employees", employeeService.getEmployees());
-        return "listemployee";
     }
 
     @GetMapping("/{id}")
@@ -60,16 +52,15 @@ public class EmployeeController extends MainController {
         Employee employee = employeeService.getEmployeeById(id);
         model.addAttribute("employee", employee);
         model.addAttribute("department", departmentService.getDepartment(employee.getDepartmentId()));
-        return "employeedata";
+        return "employeeData";
     }
 
     @GetMapping("/{id}/edit")
     public String editEmployee(@PathVariable Long id, Model model) {
         model.addAttribute("title", "Редактирование данных сотрудника");
-        Employee employee = employeeService.getEmployeeById(id);
-        model.addAttribute("employee", employee);
+        model.addAttribute("employee", employeeService.getEmployeeById(id));
         model.addAttribute("departments", departmentService.getDepartments());
-        return "newemployee";
+        return "newEmployee";
     }
 
     @GetMapping("/{id}/delete")

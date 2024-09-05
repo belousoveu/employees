@@ -7,6 +7,15 @@
 </head>
 <body>
 <h1>Отделы</h1>
+<div th:if="${newDepartment != null}" style="background-color: lightgreen; padding: 10px;">
+    <p>Добавлен новый отдел: <span th:text="${newDepartment}"></span></p>
+</div>
+<div th:if="${updatedDepartment != null}" style="background-color: lightgreen; padding: 10px;">
+    <p>Изменены данные отдела: <span th:text="${updatedDepartment}"></span></p>
+</div>
+<div th:if="${deletedDepartment != null}" style="background-color: red; padding: 10px;">
+    <p>Удален отдел: <span th:text="${deletedDepartment}"></span></p>
+</div>
 <div class="container">
     <table class="table table-striped table-bordered ">
         <thead>
@@ -20,14 +29,20 @@
         <tr th:each="department : ${departments}">
             <td th:text="${department.getId()}"></td>
             <td th:text="${department.getName()}"></td>
-            <td><a th:href="@{/departments/edit/{id}(id=${department.getId()})}" class="btn btn-primary">Изменить</a>
-                <a th:href="@{/departments/delete/{id}(id=${department.getId()})}" class="btn btn-danger">Удалить</a></td>
+            <td><a th:href="@{/departments/{id}/edit(id=${department.getId()})}" class="btn btn-primary">Изменить</a>
+                <a th:href="@{/departments/{id}/delete(id=${department.getId()})}" class="btn btn-danger">Удалить</a>
+                <a th:href="@{/departments/{id}/employees(id=${department.getId()})}" class="btn btn-success">Сотрудники</a>
+                <a th:href="@{/departments/{id}/min-salary(id=${department.getId()})}" class="btn btn-success">Мin. з/п</a>
+                <a th:href="@{/departments/{id}/max-salary(id=${department.getId()})}" class="btn btn-success">Мax. з/п</a>
+            </td>
         </tr>
         </tbody>
     </table>
 </div>
 <div class="container">
     <a th:href="@{/departments/add}" class="btn btn-primary">Добавить</a>
+    <a th:href="@{/departments/employees}" class="btn btn-success">Сотрудники по отделам</a>
+
 </div>
 
 <h6><a th:href="@{/}">Вернуться на главную</a></h6>

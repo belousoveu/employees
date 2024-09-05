@@ -1,10 +1,13 @@
 package org.skypro.be.employees.controller;
 
+import jakarta.validation.Valid;
 import org.skypro.be.employees.repository.DepartmentDto;
 import org.skypro.be.employees.service.DepartmentService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping("/departments")
@@ -16,38 +19,76 @@ public class DepartmentController {
     }
 
     @GetMapping("")
-    public String viewDepartmentsPage(Model model) {
+    public String viewDepartments(Model model) {
         model.addAttribute("departments", departmentService.getDepartments());
         return "department";
     }
 
     @GetMapping("/add")
-    public String addDepartmentPage(Model model) {
-        return "newdepartment";
+    public String addDepartment(Model model) {
+        model.addAttribute("department", new DepartmentDto());
+        return "newDepartment";
     }
 
     @PostMapping("/add")
-    public String saveDepartment(@RequestParam("name") String name, Model model) {
-        departmentService.addDepartment(name);
+    public String saveDepartment(@Valid @ModelAttribute("department") DepartmentDto department,
+                                 BindingResult bindingResult, RedirectAttributes redirectAttributes, Model model) {
+        if (bindingResult.hasErrors()) {
+            return "newDepartment";
+        }
+        redirectAttributes.addFlashAttribute("newDepartment", departmentService.addDepartment(department));
         return "redirect:/departments";
     }
 
-    @GetMapping("/edit/{id}")
+    @GetMapping("/{id}/edit")
     public String editDepartmentPage(@PathVariable("id") Long id, Model model) {
         DepartmentDto departmentDto = new DepartmentDto(departmentService.getDepartment(id));
         model.addAttribute("department", departmentDto);
-        return "editdepartment";
+        return "editDepartment";
     }
 
     @PostMapping("/update")
-    public String updateDepartment(@ModelAttribute("department") DepartmentDto department, Model model) {
-        departmentService.updateDepartment(department);
+    public String updateDepartment(@Valid @ModelAttribute("department") DepartmentDto department,
+                                   BindingResult bindingResult, RedirectAttributes redirectAttributes, Model model) {
+        if (bindingResult.hasErrors()) {
+            return "editDepartment";
+        }
+        redirectAttributes.addFlashAttribute("updatedDepartment", departmentService.updateDepartment(department));
         return "redirect:/departments";
     }
 
-    @GetMapping("/delete/{id}")
-    public String deleteDepartment(@PathVariable("id") Long id, Model model) {
-        departmentService.deleteDepartment(id);
+    @GetMapping("/{id}/delete")
+    public String deleteDepartment(@PathVariable("id") Long id, RedirectAttributes redirectAttributes, Model model) {
+        redirectAttributes.addFlashAttribute("deletedDepartment", departmentService.deleteDepartment(id));
         return "redirect:/departments";
+    }
+
+    @GetMapping("/{id}/employees")
+    public String viewEmployeesOfDepartment(@PathVariable("id") Long id, Model model) {
+        model.addAttribute("department", departmentService.getDepartment(id));
+        model.addAttribute("employees", departmentService.getEmployeesOfDepartment(id));
+        return "employeesOfDepartment";
+    }
+
+    @GetMapping("/employees")
+    public String viewEmployeesByDepartments(Model model) {
+        model.addAttribute("departments", departmentService.getEmployeesByDepartments());
+        return "employeesByDepartments";
+    }
+
+    @GetMapping("/{id}/min-salary")
+    public String viewEmployeeWithMinSalaryOfDepartment(@PathVariable("id") Long id, Model model) {
+        model.addAttribute("minSalary", true);
+        model.addAttribute("department", departmentService.getDepartment(id));
+        model.addAttribute("employee", departmentService.getEmployeeWithMinSalaryOfDepartment(id));
+        return "employeeData";
+    }
+
+    @GetMapping("/{id}/max-salary")
+    public String viewEmployeeWithMaxSalaryOfDepartment(@PathVariable("id") Long id, Model model) {
+        model.addAttribute("maxSalary", true);
+        model.addAttribute("department", departmentService.getDepartment(id));
+        model.addAttribute("employee", departmentService.getEmployeeWithMaxSalaryOfDepartment(id));
+        return "employeeData";
     }
 }

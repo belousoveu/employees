@@ -11,6 +11,9 @@ public class Department {
     private String name;
 
 
+    public Department() {
+    }
+
     public Department(String name) {
         this.id = ++currentId;
         this.name = name;
@@ -28,9 +31,6 @@ public class Department {
         this.name = name;
     }
 
-
-    public Department() {
-    }
 
     @Override
     public boolean equals(Object o) {
