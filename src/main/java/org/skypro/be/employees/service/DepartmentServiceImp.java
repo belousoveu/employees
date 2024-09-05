@@ -5,7 +5,6 @@ import org.skypro.be.employees.exception.UnableDepartmentDeleteException;
 import org.skypro.be.employees.repository.Department;
 import org.skypro.be.employees.repository.DepartmentDto;
 import org.skypro.be.employees.repository.Employee;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -28,7 +27,7 @@ public class DepartmentServiceImp implements DepartmentService {
 
     @Override
     public Department addDepartment(DepartmentDto department) {
-        Department newDepartment=new Department(department.getName());
+        Department newDepartment = new Department(department.getName());
         departments.add(newDepartment);
         return newDepartment;
     }
@@ -36,7 +35,7 @@ public class DepartmentServiceImp implements DepartmentService {
     @Override
     public Department deleteDepartment(Long id) {
         if (validateDelete(id)) {
-            Department deletedDepartment=getDepartment(id);
+            Department deletedDepartment = getDepartment(id);
             departments.remove(deletedDepartment);
             return deletedDepartment;
         } else {

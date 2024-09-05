@@ -54,7 +54,7 @@ public class EmployeeServiceImp implements EmployeeService {
 
     public Employee deleteEmployee(Long id) {
         if (!employees.containsKey(id)) {
-            throw new EmployeeNotFoundException("Сотрудник не найден");
+            throw new EmployeeNotFoundException("Сотрудник c id=" + id + " не найден");
         }
         return employees.remove(id);
     }
@@ -63,12 +63,12 @@ public class EmployeeServiceImp implements EmployeeService {
         return employees.values().stream()
                 .filter(employee -> employee.getFirstName().equals(firstName) && employee.getLastName().equals(lastName))
                 .findFirst()
-                .orElseThrow(() -> new EmployeeNotFoundException("Сотрудник не найден"));
+                .orElseThrow(() -> new EmployeeNotFoundException("Сотрудник " + firstName + " " + lastName + " не найден"));
     }
 
     public Employee getEmployeeById(Long id) {
         if (!employees.containsKey(id)) {
-            throw new EmployeeNotFoundException("Сотрудник не найден");
+            throw new EmployeeNotFoundException("Сотрудник c id=" + id + " не найден");
         }
         return employees.get(id);
     }
