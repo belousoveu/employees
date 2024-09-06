@@ -29,13 +29,8 @@
         </div>
         <div>
             <label>Пол : </label>
-            <div class="form-check">
-                <input type="radio" class="form-check-input" th:field="*{gender}" value="Муж." id="male">
-                <label class="form-check-label" for="male">Муж.</label>
-            </div>
-            <div class="form-check">
-                <input type="radio" class="form-check-input" th:field="*{gender}" value="Жен." id="female">
-                <label class="form-check-label" for="female">Жен.</label>
+            <div class="form-check" th:each="gender : ${genders}">
+                <input type="radio" class="form-check-input" th:field="*{gender}" th:value="${gender.name()}" th:text="${gender.value}">
             </div>
         </div>
         <div>

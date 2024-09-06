@@ -12,6 +12,7 @@ public class GlobalExceptionHandler {
             EmployeeStorageIsFullException.class,
             DepartmentNotFoundException.class,
             UnableDepartmentDeleteException.class})
+
     public ModelAndView handleEmployeeException(Exception e) {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("exception", e.getMessage());

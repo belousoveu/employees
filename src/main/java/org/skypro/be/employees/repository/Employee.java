@@ -11,7 +11,7 @@ public class Employee {
     String firstName;
     String lastName;
     String email;
-    String gender;
+    Gender gender;
     int age;
     int salary;
     Long departmentId;
@@ -19,7 +19,7 @@ public class Employee {
     public Employee() {
     }
 
-    private Employee(String firstName, String lastName, String email, String gender, int age, int salary, Long departmentId) {
+    private Employee(String firstName, String lastName, String email, Gender gender, int age, int salary, Long departmentId) {
         this.id = ++currentId;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -29,17 +29,6 @@ public class Employee {
         this.salary = salary;
         this.departmentId = departmentId;
     }
-
-//    public Employee (EmployeeDto employee) {
-//        this.id = ++currentId;
-//        this.firstName = employee.getFirstName();
-//        this.lastName = employee.getLastName();
-//        this.email = employee.getEmail();
-//        this.gender = employee.getGender();
-//        this.age = employee.getAge();
-//        this.salary = employee.getSalary();
-//        this.departmentId = employee.getDepartmentId();
-//    }
 
     @Override
     public boolean equals(Object o) {
@@ -87,11 +76,11 @@ public class Employee {
         this.email = email;
     }
 
-    public String getGender() {
+    public Gender getGender() {
         return gender;
     }
 
-    public void setGender(String gender) {
+    public void setGender(Gender gender) {
         this.gender = gender;
     }
 
@@ -127,7 +116,7 @@ public class Employee {
         private final String firstName;
         private final String lastName;
         private String email;
-        private String gender;
+        private Gender gender;
         private int age;
         private int salary;
         private Long departmentId;
@@ -142,7 +131,7 @@ public class Employee {
             return this;
         }
 
-        public Builder gender(String gender) {
+        public Builder gender(Gender gender) {
             this.gender = gender;
             return this;
         }

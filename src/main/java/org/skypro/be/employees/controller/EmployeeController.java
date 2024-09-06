@@ -3,6 +3,7 @@ package org.skypro.be.employees.controller;
 import jakarta.validation.Valid;
 import org.skypro.be.employees.repository.Employee;
 import org.skypro.be.employees.repository.EmployeeDto;
+import org.skypro.be.employees.repository.Gender;
 import org.skypro.be.employees.service.DepartmentService;
 import org.skypro.be.employees.service.EmployeeService;
 import org.springframework.stereotype.Controller;
@@ -33,6 +34,7 @@ public class EmployeeController extends MainController {
     public String addEmployeePage(Model model) {
         model.addAttribute("title", "Добавление нового сотрудника");
         model.addAttribute("employee", new Employee());
+        model.addAttribute("genders", Gender.values());
         model.addAttribute("departments", departmentService.getDepartments());
         return "newEmployee";
     }
@@ -42,6 +44,7 @@ public class EmployeeController extends MainController {
                                BindingResult bindingResult, RedirectAttributes redirectAttributes, Model model) {
         if (bindingResult.hasErrors()) {
             model.addAttribute("employee", employee);
+            model.addAttribute("genders", Gender.values());
             model.addAttribute("departments", departmentService.getDepartments());
             return "newEmployee";
         }
@@ -67,6 +70,7 @@ public class EmployeeController extends MainController {
     public String editEmployee(@PathVariable Long id, Model model) {
         model.addAttribute("title", "Редактирование данных сотрудника");
         model.addAttribute("employee", employeeService.getEmployeeById(id));
+        model.addAttribute("genders", Gender.values());
         model.addAttribute("departments", departmentService.getDepartments());
         return "newEmployee";
     }

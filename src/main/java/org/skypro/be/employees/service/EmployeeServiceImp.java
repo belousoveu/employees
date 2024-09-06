@@ -29,11 +29,11 @@ public class EmployeeServiceImp implements EmployeeService {
     }
 
     public Employee addEmployee(EmployeeDto employee) {
-        if (employees.size() >= LIMIT_EMPLOYEES) {
+        if (isFull()) {
             throw new EmployeeStorageIsFullException("Превышен лимит сотрудников в фирме");
         }
-        if (employees.containsKey(employee.getId())) {
-            throw new EmployeeAlreadyExistsException("Сотрудник уже добавлен");
+        if (isExist(employee.getFirstName(), employee.getLastName())) {
+            throw new EmployeeAlreadyExistsException("Сотрудник "+employee.getLastName()+" "+employee.getFirstName()+" уже добавлен в базу");
         }
         Employee newemployee = new Employee.Builder(employee.getFirstName(), employee.getLastName())
                 .email(employee.getEmail())
@@ -89,6 +89,15 @@ public class EmployeeServiceImp implements EmployeeService {
         updatedEmployee.setDepartmentId(employee.getDepartmentId());
         employees.put(updatedEmployee.getId(), updatedEmployee);
         return updatedEmployee;
+    }
+
+    private boolean isExist(String firstName, String lastName) {
+        return employees.values().stream()
+                .anyMatch(employee -> employee.getFirstName().equals(firstName) && employee.getLastName().equals(lastName));
+    }
+
+    private boolean isFull() {
+       return employees.size() >= LIMIT_EMPLOYEES;
     }
 
 }

@@ -21,7 +21,8 @@ public class EmployeeDto {
             message = "Поле 'Email' не соответствует шаблону")
     String email;
 
-    String gender;
+    Gender gender;
+
     @PositiveOrZero(message = "Поле 'Возраст' должно содержать положительное число")
     int age;
 
@@ -78,11 +79,11 @@ public class EmployeeDto {
         this.email = email;
     }
 
-    public String getGender() {
+    public Gender getGender() {
         return gender;
     }
 
-    public void setGender(String gender) {
+    public void setGender(Gender gender) {
         this.gender = gender;
     }
 
