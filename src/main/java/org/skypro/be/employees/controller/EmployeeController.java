@@ -14,7 +14,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping("/employees")
-public class EmployeeController extends MainController {
+public class EmployeeController {
     EmployeeService employeeService;
     DepartmentService departmentService;
 

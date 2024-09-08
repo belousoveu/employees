@@ -5,7 +5,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
-public abstract class MainController {
+public class MainController {
 
     @GetMapping("/")
     public String viewHomePage(Model model) {
