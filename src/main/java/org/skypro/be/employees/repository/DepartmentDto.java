@@ -2,9 +2,7 @@ package org.skypro.be.employees.repository;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
-import org.springframework.stereotype.Component;
 
-@Component
 public class DepartmentDto {
     private Long id;
 

@@ -33,7 +33,7 @@ public class EmployeeController {
     @GetMapping("/add")
     public String addEmployeePage(Model model) {
         model.addAttribute("title", "Добавление нового сотрудника");
-        model.addAttribute("employee", new Employee());
+        model.addAttribute("employee", new EmployeeDto());
         model.addAttribute("genders", Gender.values());
         model.addAttribute("departments", departmentService.getDepartments());
         return "newEmployee";

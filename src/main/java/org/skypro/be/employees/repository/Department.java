@@ -1,18 +1,11 @@
 package org.skypro.be.employees.repository;
 
-import org.springframework.stereotype.Component;
-
 import java.util.Objects;
 
-@Component
 public class Department {
     private static Long currentId = 0L;
-    private Long id;
+    private final Long id;
     private String name;
-
-
-    public Department() {
-    }
 
     public Department(String name) {
         this.id = ++currentId;
@@ -30,7 +23,6 @@ public class Department {
     public void setName(String name) {
         this.name = name;
     }
-
 
     @Override
     public boolean equals(Object o) {

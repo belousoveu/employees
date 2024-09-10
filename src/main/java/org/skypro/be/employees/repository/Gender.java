@@ -9,10 +9,6 @@ public enum Gender {
     Gender(String gender) {
         this.value = gender;
     }
-//
-//    public String getName() {
-//        return this.name();
-//    }
 
     public String getValue() {
         return this.value;

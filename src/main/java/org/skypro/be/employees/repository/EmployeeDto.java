@@ -1,9 +1,7 @@
 package org.skypro.be.employees.repository;
 
 import jakarta.validation.constraints.*;
-import org.springframework.stereotype.Component;
 
-@Component
 public class EmployeeDto {
     Long id;
 

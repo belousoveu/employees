@@ -1,5 +1,6 @@
 package org.skypro.be.employees.service;
 
+import jakarta.annotation.PostConstruct;
 import org.skypro.be.employees.exception.DepartmentNotFoundException;
 import org.skypro.be.employees.exception.UnableDepartmentDeleteException;
 import org.skypro.be.employees.repository.Department;
@@ -8,27 +9,29 @@ import org.skypro.be.employees.repository.Employee;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class DepartmentServiceImp implements DepartmentService {
-    static List<Department> departments = new ArrayList<>();
+    static Map<Long, Department> departments = new HashMap<>();
     private final EmployeeService employeeService;
-
-    static {
-        departments.add(new Department("Администрация"));
-        departments.add(new Department("Отдел разработки"));
-        departments.add(new Department("Отдел продаж"));
-        departments.add(new Department("Отдел сопровождения"));
-    }
 
     public DepartmentServiceImp(EmployeeService employeeService) {
         this.employeeService = employeeService;
     }
 
+    @PostConstruct
+    public void init() {
+        departments.put(1L, new Department("Администрация"));
+        departments.put(2L, new Department("Отдел разработки"));
+        departments.put(3L, new Department("Отдел продаж"));
+        departments.put(4L, new Department("Отдел сопровождения"));
+    }
+
     @Override
     public Department addDepartment(DepartmentDto department) {
         Department newDepartment = new Department(department.getName());
-        departments.add(newDepartment);
+        departments.put(newDepartment.getId(), newDepartment);
         return newDepartment;
     }
 
@@ -36,11 +39,10 @@ public class DepartmentServiceImp implements DepartmentService {
     public Department deleteDepartment(Long id) {
         if (validateDelete(id)) {
             Department deletedDepartment = getDepartment(id);
-            departments.remove(deletedDepartment);
+            departments.remove(id);
             return deletedDepartment;
-        } else {
-            throw new UnableDepartmentDeleteException("В отделе есть сотрудники. Невозможно удалить отдел");
         }
+        throw new UnableDepartmentDeleteException("В отделе есть сотрудники. Невозможно удалить отдел");
     }
 
     private boolean validateDelete(Long id) {
@@ -51,22 +53,18 @@ public class DepartmentServiceImp implements DepartmentService {
     @Override
     public Department updateDepartment(DepartmentDto department) {
         Long targetId = department.getId();
-        String newName = department.getName();
-        departments.stream().filter(element -> Objects.equals(element.getId(), targetId))
-                .forEach(element -> element.setName(newName));
+        departments.get(targetId).setName(department.getName());
         return getDepartment(targetId);
     }
 
     @Override
     public List<Department> getDepartments() {
-        return departments;
+        return departments.values().stream().toList();
     }
 
     @Override
     public Department getDepartment(Long id) {
-        return departments.stream()
-                .filter(department -> Objects.equals(department.getId(), id)).findFirst()
-                .orElseThrow(() -> new DepartmentNotFoundException("Отдел не найден"));
+        return departments.get(id);
     }
 
     @Override
@@ -78,11 +76,8 @@ public class DepartmentServiceImp implements DepartmentService {
 
     @Override
     public Map<String, List<Employee>> getEmployeesByDepartments() {
-        Map<String, List<Employee>> result = new HashMap<>();
-        for (Department department : departments) {
-            result.put(department.getName(), getEmployeesOfDepartment(department.getId()));
-        }
-        return result;
+        return departments.values().stream()
+                .collect(Collectors.toMap(Department::getName, department -> getEmployeesOfDepartment(department.getId())));
     }
 
     @Override
@@ -101,7 +96,4 @@ public class DepartmentServiceImp implements DepartmentService {
                 .orElseThrow(() -> new DepartmentNotFoundException("Отдел не найден"));
     }
 
-    public EmployeeService getEmployeeService() {
-        return employeeService;
-    }
 }

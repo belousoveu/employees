@@ -3,7 +3,7 @@ package org.skypro.be.employees.service;
 import org.skypro.be.employees.repository.Employee;
 import org.skypro.be.employees.repository.EmployeeDto;
 
-import java.util.List;
+import java.util.Collection;
 
 public interface EmployeeService {
 
@@ -15,8 +15,7 @@ public interface EmployeeService {
 
     Employee getEmployeeById(Long id);
 
-    List<Employee> getEmployees();
-
+    Collection<Employee> getEmployees();
 
     Employee updateEmployee(EmployeeDto employee);
 

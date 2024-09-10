@@ -1,33 +1,32 @@
 package org.skypro.be.employees.repository;
 
-import org.springframework.stereotype.Component;
-
 import java.util.Objects;
 
-@Component
 public class Employee {
     private static long currentId = 0;
-    Long id;
-    String firstName;
-    String lastName;
-    String email;
-    Gender gender;
-    int age;
-    int salary;
-    Long departmentId;
+    private final Long id;
+    private String firstName;
+    private String lastName;
+    private String email;
+    private Gender gender;
+    private int age;
+    private int salary;
+    private Long departmentId;
 
-    public Employee() {
+
+    private Employee(Builder builder) {
+        this.id = ++currentId;
+        this.firstName = builder.firstName;
+        this.lastName = builder.lastName;
+        this.email = builder.email;
+        this.gender = builder.gender;
+        this.age = builder.age;
+        this.salary = builder.salary;
+        this.departmentId = builder.departmentId;
     }
 
-    private Employee(String firstName, String lastName, String email, Gender gender, int age, int salary, Long departmentId) {
-        this.id = ++currentId;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.gender = gender;
-        this.age = age;
-        this.salary = salary;
-        this.departmentId = departmentId;
+    public static Builder builder(String firstName, String lastName) {
+        return new Builder(firstName, lastName);
     }
 
     @Override
@@ -152,7 +151,7 @@ public class Employee {
         }
 
         public Employee build() {
-            return new Employee(firstName, lastName, email, gender, age, salary, departmentId);
+            return new Employee(this);
         }
 
     }
