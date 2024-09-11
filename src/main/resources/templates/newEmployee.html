@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>NewEmployee</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+<body>
+<h1 th:text="*{title}"></h1>
+<hr>
+<form method="post" action="#" th:action="@{/employees/save}" th:object="${employee}">
+    <div class="form-group">
+        <input type="hidden" th:field="*{id}" id="id">
+        <div>
+            <label for="firstname">Имя : </label>
+            <input type="text" class="form-control" th:field="*{firstName}" id="firstname" required="required">
+            <span style="color:red" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></span>
+        </div>
+        <div>
+            <label for="lastname">Фамилия : </label>
+            <input type="text" class="form-control" th:field="*{lastName}" id="lastname" required="required">
+            <span style="color:red" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></span>
+        </div>
+        <div>
+            <label for="email">Адрес электронной почты : </label>
+            <input type="email" class="form-control" th:field="*{email}" id="email"
+                   pattern="^[^\s()<>@,;:\/]+@\w[\w\.-]+\.[a-z]{2,}$">
+            <span style="color:red" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
+        </div>
+        <div>
+            <label>Пол : </label>
+            <div class="form-check" th:each="gender : ${genders}">
+                <input type="radio" class="form-check-input" th:field="*{gender}" th:value="${gender.name()}" th:text="${gender.value}">
+            </div>
+        </div>
+        <div>
+            <label for="age">Возраст : </label>
+            <input type="text" class="form-control" th:field="*{age}" id="age" pattern="\d+"
+                   title="Неверный формат. Нужно ввести положительное целое число">
+            <span style="color:red" th:if="${#fields.hasErrors('age')}" th:errors="*{age}"></span>
+        </div>
+        <div>
+            <label for="salary">Заработная плата : </label>
+            <input type="text" class="form-control" th:field="*{salary}" id="salary" pattern="\d+"
+                   title="Неверный формат. Нужно ввести положительное целое число">
+            <span style="color:red" th:if="${#fields.hasErrors('salary')}" th:errors="*{salary}"></span>
+        </div>
+        <div>
+            <label for="departmentId">Department</label>
+            <select class="form-control" th:field="*{departmentId}" id="departmentId" required>
+                <option value=0>Select Department</option>
+                <option th:each="department : ${departments}"
+                        th:value="${department.getId()}"
+                        th:text="${department.getName()}">Department Name
+                </option>
+            </select>
+            <div style="color:red" th:if="${#fields.hasErrors('departmentId')}" th:errors="*{departmentId}"></div>
+        </div>
+        <hr>
+        <button type="submit" class="btn btn-primary">Сохранить</button>
+    </div>
+</form>
+<hr>
+
+<h6><a th:href="@{/employees}">Список сотрудников</a></h6>
+<h6><a th:href="@{/}">Вернуться на главную</a></h6>
+
+</body>
+</html>

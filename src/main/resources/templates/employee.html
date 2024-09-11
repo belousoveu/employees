@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Employees</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+<body>
+<h1>Сотрудники</h1>
+<div th:if="${newEmployee != null}" style="background-color: lightgreen; padding: 10px;">
+    <p>Добавлен новый сотрудник: <span th:text="${newEmployee}"></span></p>
+</div>
+<div th:if="${updatedEmployee != null}" style="background-color: lightgreen; padding: 10px;">
+    <p>Изменены данные сотрудника: <span th:text="${updatedEmployee}"></span></p>
+</div>
+<div th:if="${deletedEmployee != null}" style="background-color: red; padding: 10px;">
+    <p>Удален сотрудник: <span th:text="${deletedEmployee}"></span></p>
+</div>
+<div class="container">
+    <div class="col-md-8">
+        <table class="table table-striped table-bordered">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Фамилия Имя Сотрудника</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="employee : ${employees}">
+                <td th:text="${employee.getId()}"></td>
+                <td><a th:href="@{/employees/{id}(id=${employee.getId()})}" th:text="${employee}"></a>
+                </td>
+                <td><a th:href="@{/employees/{id}/edit(id=${employee.getId()})}"
+                       class="btn btn-primary">Изменить</a>
+                    <a th:href="@{/employees/{id}/delete(id=${employee.getId()})}"
+                       class="btn btn-danger">Удалить</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="container">
+    <a th:href="@{/employees/add}" class="btn btn-success">Добавить сотрудника</a>
+    <a th:href="@{/employees/search}" class="btn btn-warning">Найти сотрудника по фамилии</a>
+    <a th:href="@{/employees/delete}" class="btn btn-danger">Удалить сотрудника по фамилии</a>
+</div>
+
+<hr>
+<h6><a th:href="@{/}">Вернуться на главную</a></h6>
+
+</body>
+</html>

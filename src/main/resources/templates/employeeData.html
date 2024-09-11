@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>DataOfEmployee</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+<body>
+<h1>Сведения о сотруднике</h1>
+<div th:if="${minSalary!=null}">
+    <p th:text="${'с минимальной зарплатой по отделу: ' + department}"></p>
+</div>
+<div th:if="${maxSalary!=null}">
+    <p th:text="${'с максимальной зарплатой по отделу: ' + department}"></p>
+</div>
+<div>
+    <table class="table table-striped table-bordered ">
+        <thead>
+        <tr>
+            <th>Параметр</th>
+            <th>Значение</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>Фамилия</td>
+            <td th:text="${employee.getLastName()}"></td>
+        </tr>
+        <tr>
+            <td>Имя</td>
+            <td th:text="${employee.getFirstName()}"></td>
+        </tr>
+        <tr th:if="${employee.getEmail()!= null && !#strings.isEmpty(employee.getEmail())}">
+            <td>E-mail</td>
+            <td th:text="${employee.getEmail()}"></td>
+        </tr>
+        <tr th:if="${employee.getGender() != null}">
+            <td>Пол</td>
+            <td th:text="${employee.getGender()}"></td>
+        </tr>
+        <tr th:if="${employee.getAge() >0}">
+            <td>Возраст</td>
+            <td th:text="${employee.getAge()}"></td>
+        </tr>
+        <tr th:if="${employee.getSalary() >0}">
+            <td>Оклад</td>
+            <td th:text="${employee.getSalary()}"></td>
+        </tr>
+        <tr>
+            <td>Отдел</td>
+            <td th:text="${department.getName()}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<div th:if="${minSalary==null && maxSalary == null}">
+    <a th:href="@{/employees/{id}/edit(id=${employee.getId()})}" class="btn btn-primary">Изменить</a>
+    <a th:href="@{/employees/{id}/delete(id=${employee.getId()})}" class="btn btn-danger">Удалить сотрудника</a>
+</div>
+
+<hr>
+<h6><a th:href="@{/employees}">Список сотрудников</a></h6>
+<h6><a th:href="@{/departments}">Список отделов</a></h6>
+<h6><a th:href="@{/}">Вернуться на главную</a></h6>
+
+</body>
+</html>
