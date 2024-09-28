@@ -1,6 +1,7 @@
 package org.skypro.be.employees.repository;
 
 import jakarta.validation.constraints.*;
+import org.apache.commons.lang3.StringUtils;
 
 public class EmployeeDto {
     Long id;
@@ -58,7 +59,7 @@ public class EmployeeDto {
     }
 
     public void setFirstName(String firstName) {
-        this.firstName = firstName;
+        this.firstName = StringUtils.capitalize(firstName);
     }
 
     public String getLastName() {
@@ -66,7 +67,7 @@ public class EmployeeDto {
     }
 
     public void setLastName(String lastName) {
-        this.lastName = lastName;
+        this.lastName = StringUtils.capitalize(lastName);
     }
 
     public String getEmail() {

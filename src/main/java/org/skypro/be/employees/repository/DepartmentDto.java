@@ -2,6 +2,7 @@ package org.skypro.be.employees.repository;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
+import org.apache.commons.lang3.StringUtils;
 
 public class DepartmentDto {
     private Long id;
@@ -15,7 +16,7 @@ public class DepartmentDto {
 
     public DepartmentDto(Long id, String name) {
         this.id = id;
-        this.name = name;
+        this.name = StringUtils.capitalize(name);
     }
 
     public DepartmentDto(Department department) {
@@ -28,7 +29,7 @@ public class DepartmentDto {
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.name = StringUtils.capitalize(name);
     }
 
     public Long getId() {
