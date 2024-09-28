@@ -8,8 +8,13 @@ import org.skypro.be.employees.repository.DepartmentDto;
 import org.skypro.be.employees.repository.Employee;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
+
+import static java.util.Comparator.comparing;
 
 @Service
 public class DepartmentServiceImp implements DepartmentService {
@@ -84,7 +89,7 @@ public class DepartmentServiceImp implements DepartmentService {
     public Employee getEmployeeWithMinSalaryOfDepartment(Long id) {
         return employeeService.getEmployees().stream()
                 .filter(employee -> Objects.equals(employee.getDepartmentId(), id))
-                .min(Comparator.comparing(Employee::getSalary))
+                .min(comparing(Employee::getSalary))
                 .orElseThrow(() -> new DepartmentNotFoundException("Отдел не найден"));
     }
 
@@ -92,7 +97,7 @@ public class DepartmentServiceImp implements DepartmentService {
     public Employee getEmployeeWithMaxSalaryOfDepartment(Long id) {
         return employeeService.getEmployees().stream()
                 .filter(employee -> Objects.equals(employee.getDepartmentId(), id))
-                .max(Comparator.comparing(Employee::getSalary))
+                .max(comparing(Employee::getSalary))
                 .orElseThrow(() -> new DepartmentNotFoundException("Отдел не найден"));
     }
 
