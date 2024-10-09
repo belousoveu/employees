@@ -1,7 +1,7 @@
 package org.skypro.be.employees.service;
 
-import org.skypro.be.employees.repository.Employee;
-import org.skypro.be.employees.repository.EmployeeDto;
+import org.skypro.be.employees.entity.Employee;
+import org.skypro.be.employees.entity.EmployeeDto;
 
 import java.util.Collection;
 
@@ -19,5 +19,5 @@ public interface EmployeeService {
 
     Employee updateEmployee(EmployeeDto employee);
 
-    Employee deleteEmployee(Long id);
+    Employee deleteEmployeeById(Long id);
 }

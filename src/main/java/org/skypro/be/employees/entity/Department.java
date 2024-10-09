@@ -1,28 +1,13 @@
-package org.skypro.be.employees.repository;
+package org.skypro.be.employees.entity;
+
+import lombok.Data;
 
 import java.util.Objects;
 
+@Data
 public class Department {
-    private static Long currentId = 0L;
-    private final Long id;
+    private Long id;
     private String name;
-
-    public Department(String name) {
-        this.id = ++currentId;
-        this.name = name;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
 
     @Override
     public boolean equals(Object o) {

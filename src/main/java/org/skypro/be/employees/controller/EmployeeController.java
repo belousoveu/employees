@@ -1,9 +1,9 @@
 package org.skypro.be.employees.controller;
 
 import jakarta.validation.Valid;
-import org.skypro.be.employees.repository.Employee;
-import org.skypro.be.employees.repository.EmployeeDto;
-import org.skypro.be.employees.repository.Gender;
+import org.skypro.be.employees.entity.Employee;
+import org.skypro.be.employees.entity.EmployeeDto;
+import org.skypro.be.employees.entity.Gender;
 import org.skypro.be.employees.service.DepartmentService;
 import org.skypro.be.employees.service.EmployeeService;
 import org.springframework.stereotype.Controller;
@@ -62,7 +62,7 @@ public class EmployeeController {
     public String viewEmployee(@PathVariable Long id, Model model) {
         Employee employee = employeeService.getEmployeeById(id);
         model.addAttribute("employee", employee);
-        model.addAttribute("department", departmentService.getDepartment(employee.getDepartmentId()));
+        model.addAttribute("department", departmentService.getDepartmentById(employee.getDepartmentId()));
         return "employeeData";
     }
 
@@ -77,7 +77,7 @@ public class EmployeeController {
 
     @GetMapping("/{id}/delete")
     public String deleteEmployee(@PathVariable Long id, RedirectAttributes redirectAttributes) {
-        Employee deletedEmployee = employeeService.deleteEmployee(id);
+        Employee deletedEmployee = employeeService.deleteEmployeeById(id);
         redirectAttributes.addFlashAttribute("deletedEmployee", deletedEmployee);
         return "redirect:/employees";
     }

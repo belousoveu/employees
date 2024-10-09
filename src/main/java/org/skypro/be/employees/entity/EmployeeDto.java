@@ -1,9 +1,14 @@
-package org.skypro.be.employees.repository;
+package org.skypro.be.employees.entity;
 
 import jakarta.validation.constraints.*;
+import lombok.Getter;
+import lombok.Setter;
 import org.apache.commons.lang3.StringUtils;
 
+
+@Getter
 public class EmployeeDto {
+    @Setter
     Long id;
 
     @NotBlank(message = "Поле 'Имя' не может быть пустым")
@@ -16,18 +21,23 @@ public class EmployeeDto {
     @Size(min = 2, max = 50, message = "Поле 'Фамилия' должно содержать от 2 до 50 символов")
     String lastName;
 
+    @Setter
     @Pattern(regexp = "^$|^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$",
             message = "Поле 'Email' не соответствует шаблону")
     String email;
 
+    @Setter
     Gender gender;
 
+    @Setter
     @PositiveOrZero(message = "Поле 'Возраст' должно содержать положительное число")
     int age;
 
+    @Setter
     @PositiveOrZero(message = "Поле 'Заработная плата' должно содержать положительное число")
     int salary;
 
+    @Setter
     @NotNull(message = "Поле 'Отдел' не может быть пустым")
     @Min(value = 1, message = "Поле 'Отдел' не может быть пустым")
     Long departmentId;
@@ -35,78 +45,12 @@ public class EmployeeDto {
     public EmployeeDto() {
     }
 
-    public EmployeeDto(Employee employee) {
-        this.id = employee.getId();
-        this.firstName = employee.getFirstName();
-        this.lastName = employee.getLastName();
-        this.email = employee.getEmail();
-        this.gender = employee.getGender();
-        this.age = employee.getAge();
-        this.salary = employee.getSalary();
-        this.departmentId = employee.getDepartmentId();
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
     public void setFirstName(String firstName) {
         this.firstName = StringUtils.capitalize(firstName);
-    }
-
-    public String getLastName() {
-        return lastName;
     }
 
     public void setLastName(String lastName) {
         this.lastName = StringUtils.capitalize(lastName);
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public Gender getGender() {
-        return gender;
-    }
-
-    public void setGender(Gender gender) {
-        this.gender = gender;
-    }
-
-    public int getAge() {
-        return age;
-    }
-
-    public void setAge(int age) {
-        this.age = age;
-    }
-
-    public int getSalary() {
-        return salary;
-    }
-
-    public void setSalary(int salary) {
-        this.salary = salary;
-    }
-
-    public Long getDepartmentId() {
-        return departmentId;
-    }
-
-    public void setDepartmentId(Long departmentId) {
-        this.departmentId = departmentId;
-    }
 }

@@ -1,5 +1,8 @@
-package org.skypro.be.employees.repository;
+package org.skypro.be.employees.entity;
 
+import lombok.Getter;
+
+@Getter
 public enum Gender {
     MALE("Муж."),
     FEMALE("Жен.");
@@ -8,10 +11,6 @@ public enum Gender {
 
     Gender(String gender) {
         this.value = gender;
-    }
-
-    public String getValue() {
-        return this.value;
     }
 
     @Override

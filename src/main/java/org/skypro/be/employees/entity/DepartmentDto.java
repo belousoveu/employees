@@ -1,10 +1,14 @@
-package org.skypro.be.employees.repository;
+package org.skypro.be.employees.entity;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
+import lombok.Getter;
+import lombok.Setter;
 import org.apache.commons.lang3.StringUtils;
 
+@Getter
 public class DepartmentDto {
+    @Setter
     private Long id;
 
     @NotBlank(message = "Наименование отдела не может быть пустым")
@@ -14,30 +18,8 @@ public class DepartmentDto {
     public DepartmentDto() {
     }
 
-    public DepartmentDto(Long id, String name) {
-        this.id = id;
-        this.name = StringUtils.capitalize(name);
-    }
-
-    public DepartmentDto(Department department) {
-        this.id = department.getId();
-        this.name = department.getName();
-    }
-
-    public String getName() {
-        return name;
-    }
-
     public void setName(String name) {
         this.name = StringUtils.capitalize(name);
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
 }
