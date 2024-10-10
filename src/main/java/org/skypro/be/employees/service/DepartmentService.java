@@ -11,19 +11,19 @@ import java.util.Map;
 public interface DepartmentService {
     Department addDepartment(DepartmentDto department);
 
-    Department deleteDepartmentById(Long id);
+    Department deleteDepartmentById(int id);
 
     Department updateDepartment(DepartmentDto department);
 
     Collection<Department> getDepartments();
 
-    Department getDepartmentById(Long id);
+    Department getDepartmentById(int id);
 
-    List<Employee> getEmployeesOfDepartment(Long id);
+    List<Employee> getEmployeesOfDepartment(int id);
 
     Map<String, List<Employee>> getEmployeesByDepartments();
 
-    Employee getEmployeeWithMinSalaryOfDepartment(Long id);
+    Employee getEmployeeWithMinSalaryOfDepartment(int id);
 
-    Employee getEmployeeWithMaxSalaryOfDepartment(Long id);
+    Employee getEmployeeWithMaxSalaryOfDepartment(int id);
 }

@@ -9,7 +9,7 @@ import org.apache.commons.lang3.StringUtils;
 @Getter
 public class EmployeeDto {
     @Setter
-    Long id;
+    int id;
 
     @NotBlank(message = "Поле 'Имя' не может быть пустым")
     @Pattern(regexp = "^[а-яА-Я]+$", message = "Поле 'Имя' может состоять только из букв")
@@ -40,7 +40,7 @@ public class EmployeeDto {
     @Setter
     @NotNull(message = "Поле 'Отдел' не может быть пустым")
     @Min(value = 1, message = "Поле 'Отдел' не может быть пустым")
-    Long departmentId;
+    int departmentId;
 
     public EmployeeDto() {
     }

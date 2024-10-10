@@ -9,22 +9,22 @@ import java.util.*;
 
 @Component
 public class EmployeeStorage implements EmployeeRepository {
-    private static long currentId = 0L;
+    private static int currentId = 0;
     private static final int LIMIT_EMPLOYEES = 10;
-    private static final Map<Long, Employee> employees = new HashMap<>(LIMIT_EMPLOYEES);
+    private static final Map<Integer, Employee> employees = new HashMap<>(LIMIT_EMPLOYEES);
 
 
     @PostConstruct
     public void init() {
-        employees.put(1L, Employee.builder(1L, "Сергей", "Васильев").age(50).departmentId(1L).salary(150_000).build());
-        employees.put(2L, Employee.builder(2L, "Екатерина", "Воронцова").email("vorontcova@name.org").departmentId(2L).salary(120000).build());
-        employees.put(3L, Employee.builder(3L, "Владимир", "Иванов").departmentId(2L).salary(110000).build());
-        employees.put(4L, Employee.builder(4L, "Иван", "Иванов").age(34).departmentId(3L).salary(115_000).build());
-        employees.put(5L, Employee.builder(5L, "Ольга", "Волкова").departmentId(4L).salary(110_000).build());
+        employees.put(++currentId, Employee.builder(currentId, "Сергей", "Васильев").age(50).departmentId(1).salary(150_000).build());
+        employees.put(++currentId, Employee.builder(currentId, "Екатерина", "Воронцова").email("vorontcova@name.org").departmentId(2).salary(120000).build());
+        employees.put(++currentId, Employee.builder(currentId, "Владимир", "Иванов").departmentId(2).salary(110000).build());
+        employees.put(++currentId, Employee.builder(currentId, "Иван", "Иванов").age(34).departmentId(3).salary(115_000).build());
+        employees.put(++currentId, Employee.builder(currentId, "Ольга", "Волкова").departmentId(4).salary(110_000).build());
     }
 
     @Override
-    public Long getNextId() {
+    public int getNextId() {
         return ++currentId;
     }
 
@@ -49,7 +49,7 @@ public class EmployeeStorage implements EmployeeRepository {
     }
 
     @Override
-    public Optional<Employee> findById(Long id) {
+    public Optional<Employee> findById(int id) {
         return Optional.of(employees.getOrDefault(id, null));
     }
 

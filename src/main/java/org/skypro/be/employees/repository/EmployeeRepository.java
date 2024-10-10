@@ -8,7 +8,7 @@ import java.util.Optional;
 public interface EmployeeRepository {
 
 
-    Long getNextId();
+    int getNextId();
 
     Employee save(Employee employee);
 
@@ -16,7 +16,7 @@ public interface EmployeeRepository {
 
     Employee delete(Employee employee);
 
-    Optional<Employee> findById(Long id);
+    Optional<Employee> findById(int id);
 
     Collection<Employee> findAll();
 }

@@ -35,7 +35,7 @@ public class DepartmentServiceImp implements DepartmentService {
     }
 
     @Override
-    public Department deleteDepartmentById(Long id) {
+    public Department deleteDepartmentById(int id) {
         if (!isPossibleDelete(id)) {
             throw new UnableDepartmentDeleteException("Unable to delete department with id: " + id + " because it has employees");
         }
@@ -54,12 +54,12 @@ public class DepartmentServiceImp implements DepartmentService {
     }
 
     @Override
-    public Department getDepartmentById(Long id) {
+    public Department getDepartmentById(int id) {
         return repository.findById(id);
     }
 
     @Override
-    public List<Employee> getEmployeesOfDepartment(Long id) {
+    public List<Employee> getEmployeesOfDepartment(int id) {
         return employeeService.getEmployees().stream()
                 .filter(employee -> Objects.equals(employee.getDepartmentId(), id))
                 .toList();
@@ -72,7 +72,7 @@ public class DepartmentServiceImp implements DepartmentService {
     }
 
     @Override
-    public Employee getEmployeeWithMinSalaryOfDepartment(Long id) {
+    public Employee getEmployeeWithMinSalaryOfDepartment(int id) {
         return employeeService.getEmployees().stream()
                 .filter(employee -> Objects.equals(employee.getDepartmentId(), id))
                 .min(comparing(Employee::getSalary))
@@ -80,14 +80,14 @@ public class DepartmentServiceImp implements DepartmentService {
     }
 
     @Override
-    public Employee getEmployeeWithMaxSalaryOfDepartment(Long id) {
+    public Employee getEmployeeWithMaxSalaryOfDepartment(int id) {
         return employeeService.getEmployees().stream()
                 .filter(employee -> Objects.equals(employee.getDepartmentId(), id))
                 .max(comparing(Employee::getSalary))
                 .orElseThrow(() -> new DepartmentNotFoundException("Department with id " + id + " not found"));
     }
 
-    private boolean isPossibleDelete(Long id) {
+    private boolean isPossibleDelete(int id) {
         return employeeService.getEmployees().stream()
                 .noneMatch(employee -> Objects.equals(employee.getDepartmentId(), id));
     }

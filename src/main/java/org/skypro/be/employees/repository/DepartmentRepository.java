@@ -6,7 +6,7 @@ import java.util.Collection;
 
 public interface DepartmentRepository {
 
-    long getNextId();
+    int getNextId();
 
     Department save(Department department);
 
@@ -14,5 +14,5 @@ public interface DepartmentRepository {
 
     Collection<Department> findAll();
 
-    Department findById(Long id);
+    Department findById(int id);
 }

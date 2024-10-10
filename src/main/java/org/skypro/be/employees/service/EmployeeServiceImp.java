@@ -35,7 +35,7 @@ public class EmployeeServiceImp implements EmployeeService {
     }
 
     @Override
-    public Employee deleteEmployeeById(Long id) {
+    public Employee deleteEmployeeById(int id) {
         Employee employee = repository.findById(id).orElseThrow(() -> new EmployeeNotFoundException(id));
         return repository.delete(employee);
     }
@@ -45,7 +45,7 @@ public class EmployeeServiceImp implements EmployeeService {
                 .orElseThrow(() -> new EmployeeNotFoundException(firstName, lastName));
     }
 
-    public Employee getEmployeeById(Long id) {
+    public Employee getEmployeeById(int id) {
         return repository.findById(id)
                 .orElseThrow(() -> new EmployeeNotFoundException(id));
     }

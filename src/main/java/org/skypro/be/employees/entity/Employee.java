@@ -6,14 +6,14 @@ import java.util.Objects;
 
 @Data
 public class Employee {
-    private Long id;
+    private int id;
     private String firstName;
     private String lastName;
     private String email;
     private Gender gender;
     private int age;
     private int salary;
-    private Long departmentId;
+    private int departmentId;
 
     public Employee() {
     }
@@ -29,7 +29,7 @@ public class Employee {
         this.departmentId = builder.departmentId;
     }
 
-    public static Builder builder(Long id, String firstName, String lastName) {
+    public static Builder builder(int id, String firstName, String lastName) {
         return new Builder(id, firstName, lastName);
     }
 
@@ -51,22 +51,21 @@ public class Employee {
         return this.getFullName();
     }
 
-
     public String getFullName() {
         return lastName + " " + firstName;
     }
 
     public static class Builder {
-        private final Long id;
+        private final int id;
         private final String firstName;
         private final String lastName;
         private String email;
         private Gender gender;
         private int age;
         private int salary;
-        private Long departmentId;
+        private int departmentId;
 
-        public Builder(Long id, String firstName, String lastName) {
+        public Builder(int id, String firstName, String lastName) {
             this.id = id;
             this.firstName = firstName;
             this.lastName = lastName;
@@ -92,7 +91,7 @@ public class Employee {
             return this;
         }
 
-        public Builder departmentId(Long departmentId) {
+        public Builder departmentId(int departmentId) {
             this.departmentId = departmentId;
             return this;
         }

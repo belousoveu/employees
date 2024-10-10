@@ -42,7 +42,7 @@ public class DepartmentController {
     }
 
     @GetMapping("/{id}/edit")
-    public String editDepartmentPage(@PathVariable("id") Long id, Model model) {
+    public String editDepartmentPage(@PathVariable("id") Integer id, Model model) {
         DepartmentDto dto = MapperDepartment.toDto(departmentService.getDepartmentById(id));
         model.addAttribute("department", dto);
         return "editDepartment";
@@ -59,13 +59,13 @@ public class DepartmentController {
     }
 
     @GetMapping("/{id}/delete")
-    public String deleteDepartment(@PathVariable("id") Long id, RedirectAttributes redirectAttributes) {
+    public String deleteDepartment(@PathVariable("id") Integer id, RedirectAttributes redirectAttributes) {
         redirectAttributes.addFlashAttribute("deletedDepartment", departmentService.deleteDepartmentById(id));
         return "redirect:/departments";
     }
 
     @GetMapping("/{id}/employees")
-    public String viewEmployeesOfDepartment(@PathVariable("id") Long id, Model model) {
+    public String viewEmployeesOfDepartment(@PathVariable("id") Integer id, Model model) {
         model.addAttribute("department", departmentService.getDepartmentById(id));
         model.addAttribute("employees", departmentService.getEmployeesOfDepartment(id));
         return "employeesOfDepartment";
@@ -78,7 +78,7 @@ public class DepartmentController {
     }
 
     @GetMapping("/{id}/min-salary")
-    public String viewEmployeeWithMinSalaryOfDepartment(@PathVariable("id") Long id, Model model) {
+    public String viewEmployeeWithMinSalaryOfDepartment(@PathVariable("id") Integer id, Model model) {
         model.addAttribute("minSalary", true);
         model.addAttribute("department", departmentService.getDepartmentById(id));
         model.addAttribute("employee", departmentService.getEmployeeWithMinSalaryOfDepartment(id));
@@ -86,7 +86,7 @@ public class DepartmentController {
     }
 
     @GetMapping("/{id}/max-salary")
-    public String viewEmployeeWithMaxSalaryOfDepartment(@PathVariable("id") Long id, Model model) {
+    public String viewEmployeeWithMaxSalaryOfDepartment(@PathVariable("id") Integer id, Model model) {
         model.addAttribute("maxSalary", true);
         model.addAttribute("department", departmentService.getDepartmentById(id));
         model.addAttribute("employee", departmentService.getEmployeeWithMaxSalaryOfDepartment(id));

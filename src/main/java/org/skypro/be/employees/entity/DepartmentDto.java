@@ -9,7 +9,7 @@ import org.apache.commons.lang3.StringUtils;
 @Getter
 public class DepartmentDto {
     @Setter
-    private Long id;
+    private Integer id;
 
     @NotBlank(message = "Наименование отдела не может быть пустым")
     @Pattern(regexp = "^[А-Яа-я0-9- ]+$", message = "Наименование отдела содержит недопустимые символы")

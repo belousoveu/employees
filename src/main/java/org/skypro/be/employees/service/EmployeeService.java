@@ -13,11 +13,11 @@ public interface EmployeeService {
 
     Employee findEmployeeByName(String firstName, String lastName);
 
-    Employee getEmployeeById(Long id);
+    Employee getEmployeeById(int id);
 
     Collection<Employee> getEmployees();
 
     Employee updateEmployee(EmployeeDto employee);
 
-    Employee deleteEmployeeById(Long id);
+    Employee deleteEmployeeById(int id);
 }

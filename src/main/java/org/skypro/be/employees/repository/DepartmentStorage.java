@@ -12,22 +12,22 @@ import java.util.Map;
 
 @Component
 public class DepartmentStorage implements DepartmentRepository {
-    private final static Map<Long, Department> departments = new HashMap<>();
-    private long currentId = 0L;
+    private final static Map<Integer, Department> departments = new HashMap<>();
+    private int currentId = 0;
 
 
     @PostConstruct
     public void init() {
         List<String> departmentsNames = List.of("Администрация", "Отдел разработки", "Отдел продаж", "Отдел сопровождения");
-        for (int i = 0; i < departmentsNames.size(); i++) {
+        for (String name : departmentsNames) {
             Department department = new Department();
-            department.setId((long) ++i);
-            department.setName(departmentsNames.get(i));
+            department.setId( ++currentId);
+            department.setName(name);
             departments.put(department.getId(), department);
         }
     }
 
-    public long getNextId() {
+    public int getNextId() {
         return ++currentId;
     }
 
@@ -48,7 +48,7 @@ public class DepartmentStorage implements DepartmentRepository {
     }
 
     @Override
-    public Department findById(Long id) {
+    public Department findById(int id) {
         return departments.entrySet().stream()
                 .filter(entry -> entry.getKey().equals(id))
                 .findFirst()

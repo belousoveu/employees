@@ -6,7 +6,7 @@ import java.util.Objects;
 
 @Data
 public class Department {
-    private Long id;
+    private Integer id;
     private String name;
 
     @Override
