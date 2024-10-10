@@ -17,7 +17,7 @@ public interface DepartmentService {
 
     Collection<Department> getDepartments();
 
-    Department getDepartmentById(int id);
+    Department findDepartmentById(int id);
 
     List<Employee> getEmployeesOfDepartment(int id);
 

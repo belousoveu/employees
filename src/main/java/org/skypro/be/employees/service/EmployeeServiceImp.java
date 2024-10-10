@@ -5,7 +5,7 @@ import org.skypro.be.employees.entity.EmployeeDto;
 import org.skypro.be.employees.entity.MapperEmployee;
 import org.skypro.be.employees.exception.EmployeeAlreadyExistsException;
 import org.skypro.be.employees.exception.EmployeeNotFoundException;
-import org.skypro.be.employees.repository.EmployeeRepository;
+import org.skypro.be.employees.repository.Repository;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
@@ -13,9 +13,9 @@ import java.util.Collection;
 @Service
 public class EmployeeServiceImp implements EmployeeService {
 
-    private final EmployeeRepository repository;
+    private final Repository<Employee> repository;
 
-    public EmployeeServiceImp(EmployeeRepository repository) {
+    public EmployeeServiceImp(Repository<Employee> repository) {
         this.repository = repository;
     }
 

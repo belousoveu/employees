@@ -2,16 +2,12 @@ package org.skypro.be.employees.repository;
 
 import jakarta.annotation.PostConstruct;
 import org.skypro.be.employees.entity.Department;
-import org.skypro.be.employees.exception.DepartmentNotFoundException;
 import org.springframework.stereotype.Component;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Component
-public class DepartmentStorage implements DepartmentRepository {
+public class DepartmentStorage implements Repository<Department> {
     private final static Map<Integer, Department> departments = new HashMap<>();
     private int currentId = 0;
 
@@ -21,7 +17,7 @@ public class DepartmentStorage implements DepartmentRepository {
         List<String> departmentsNames = List.of("Администрация", "Отдел разработки", "Отдел продаж", "Отдел сопровождения");
         for (String name : departmentsNames) {
             Department department = new Department();
-            department.setId( ++currentId);
+            department.setId(++currentId);
             department.setName(name);
             departments.put(department.getId(), department);
         }
@@ -43,17 +39,20 @@ public class DepartmentStorage implements DepartmentRepository {
 
     @Override
     public Collection<Department> findAll() {
-
         return departments.values().stream().toList();
     }
 
     @Override
-    public Department findById(int id) {
+    public Optional<Department> findById(int id) {
         return departments.entrySet().stream()
                 .filter(entry -> entry.getKey().equals(id))
                 .findFirst()
-                .orElseThrow(() -> new DepartmentNotFoundException("Department with id " + id + " not found"))
-                .getValue();
+                .map(Map.Entry::getValue);
+    }
+
+    @Override
+    public Optional<Department> findByFirstNameAndLastName(String firstName, String lastName) {
+        throw new UnsupportedOperationException("Not implemented");
     }
 
 }

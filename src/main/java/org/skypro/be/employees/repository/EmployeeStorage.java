@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 import java.util.*;
 
 @Component
-public class EmployeeStorage implements EmployeeRepository {
+public class EmployeeStorage implements Repository<Employee> {
     private static int currentId = 0;
     private static final int LIMIT_EMPLOYEES = 10;
     private static final Map<Integer, Employee> employees = new HashMap<>(LIMIT_EMPLOYEES);

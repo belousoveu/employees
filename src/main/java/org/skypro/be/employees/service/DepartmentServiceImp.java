@@ -6,7 +6,7 @@ import org.skypro.be.employees.entity.Employee;
 import org.skypro.be.employees.entity.MapperDepartment;
 import org.skypro.be.employees.exception.DepartmentNotFoundException;
 import org.skypro.be.employees.exception.UnableDepartmentDeleteException;
-import org.skypro.be.employees.repository.DepartmentRepository;
+import org.skypro.be.employees.repository.Repository;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
@@ -20,9 +20,9 @@ import static java.util.Comparator.comparing;
 @Service
 public class DepartmentServiceImp implements DepartmentService {
     private final EmployeeService employeeService;
-    private final DepartmentRepository repository;
+    private final Repository<Department> repository;
 
-    public DepartmentServiceImp(EmployeeService employeeService, DepartmentRepository repository) {
+    public DepartmentServiceImp(EmployeeService employeeService, Repository<Department> repository) {
         this.employeeService = employeeService;
         this.repository = repository;
     }
@@ -40,7 +40,7 @@ public class DepartmentServiceImp implements DepartmentService {
             throw new UnableDepartmentDeleteException("Unable to delete department with id: " + id + " because it has employees");
         }
 
-        return repository.delete(getDepartmentById(id));
+        return repository.delete(findDepartmentById(id));
     }
 
     @Override
@@ -54,8 +54,8 @@ public class DepartmentServiceImp implements DepartmentService {
     }
 
     @Override
-    public Department getDepartmentById(int id) {
-        return repository.findById(id);
+    public Department findDepartmentById(int id) {
+        return repository.findById(id).orElseThrow(() -> new DepartmentNotFoundException("Department with id " + id + " not found"));
     }
 
     @Override

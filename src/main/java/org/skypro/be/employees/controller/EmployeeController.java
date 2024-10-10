@@ -61,7 +61,7 @@ public class EmployeeController {
     public String viewEmployee(@PathVariable Integer id, Model model) {
         Employee employee = employeeService.getEmployeeById(id);
         model.addAttribute("employee", employee);
-        model.addAttribute("department", departmentService.getDepartmentById(employee.getDepartmentId()));
+        model.addAttribute("department", departmentService.findDepartmentById(employee.getDepartmentId()));
         return "employeeData";
     }
 
