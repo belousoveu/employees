@@ -27,7 +27,6 @@ public class DepartmentServiceImp implements DepartmentService {
         this.repository = repository;
     }
 
-
     @Override
     public Department addDepartment(DepartmentDto dto) {
         dto.setId(repository.getNextId());
@@ -39,7 +38,6 @@ public class DepartmentServiceImp implements DepartmentService {
         if (!isPossibleDelete(id)) {
             throw new UnableDepartmentDeleteException("Unable to delete department with id: " + id + " because it has employees");
         }
-
         return repository.delete(findDepartmentById(id));
     }
 
@@ -85,6 +83,34 @@ public class DepartmentServiceImp implements DepartmentService {
                 .filter(employee -> Objects.equals(employee.getDepartmentId(), id))
                 .max(comparing(Employee::getSalary))
                 .orElseThrow(() -> new DepartmentNotFoundException("Department with id " + id + " not found"));
+    }
+
+    @Override
+    public int getSumSalaryOfDepartment(int id) {
+        return getEmployeesOfDepartment(id).stream()
+                .mapToInt(Employee::getSalary).sum();
+    }
+
+    @Override
+    public double getAverageSalaryOfDepartment(int id) {
+        getEmployeesOfDepartment(id);
+        return getEmployeesOfDepartment(id).stream()
+                .mapToInt(Employee::getSalary).average()
+                .orElse(0.0);
+    }
+
+    @Override
+    public int getMaxSalaryOfDepartment(int id) {
+        return getEmployeesOfDepartment(id).stream()
+                .mapToInt(Employee::getSalary).max()
+                .orElse(0);
+    }
+
+    @Override
+    public int getMinSalaryOfDepartment(int id) {
+        return getEmployeesOfDepartment(id).stream()
+                .mapToInt(Employee::getSalary).min()
+                .orElse(0);
     }
 
     private boolean isPossibleDelete(int id) {

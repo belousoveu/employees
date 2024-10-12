@@ -1,6 +1,7 @@
 package org.skypro.be.employees.repository;
 
 import jakarta.annotation.PostConstruct;
+import org.jetbrains.annotations.NotNull;
 import org.skypro.be.employees.entity.Employee;
 import org.skypro.be.employees.exception.EmployeeStorageIsFullException;
 import org.springframework.stereotype.Component;
@@ -33,7 +34,8 @@ public class EmployeeStorage implements Repository<Employee> {
         if (isFull() && !employees.containsKey(employee.getId())) {
             throw new EmployeeStorageIsFullException("Employee storage is full");
         }
-        return employees.put(employee.getId(), employee);
+        employees.put(employee.getId(), employee);
+        return employee;
     }
 
     @Override
@@ -44,18 +46,22 @@ public class EmployeeStorage implements Repository<Employee> {
     }
 
     @Override
-    public Employee delete(Employee employee) {
+    public Employee delete(@NotNull Employee employee) {
         return employees.remove(employee.getId());
     }
 
     @Override
     public Optional<Employee> findById(int id) {
-        return Optional.of(employees.getOrDefault(id, null));
+        return Optional.ofNullable(employees.get(id));
     }
 
     @Override
     public Collection<Employee> findAll() {
         return Collections.unmodifiableCollection(employees.values());
+    }
+
+    public int getLimitEmployees() {
+        return LIMIT_EMPLOYEES;
     }
 
     private boolean isFull() {

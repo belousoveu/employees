@@ -1,6 +1,7 @@
 package org.skypro.be.employees.repository;
 
 import jakarta.annotation.PostConstruct;
+import org.jetbrains.annotations.NotNull;
 import org.skypro.be.employees.entity.Department;
 import org.springframework.stereotype.Component;
 
@@ -29,11 +30,12 @@ public class DepartmentStorage implements Repository<Department> {
 
     @Override
     public Department save(Department department) {
-        return departments.put(department.getId(), department);
+        departments.put(department.getId(), department);
+        return department;
     }
 
     @Override
-    public Department delete(Department department) {
+    public Department delete(@NotNull Department department) {
         return departments.remove(department.getId());
     }
 

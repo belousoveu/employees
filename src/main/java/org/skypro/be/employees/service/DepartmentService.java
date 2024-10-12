@@ -26,4 +26,12 @@ public interface DepartmentService {
     Employee getEmployeeWithMinSalaryOfDepartment(int id);
 
     Employee getEmployeeWithMaxSalaryOfDepartment(int id);
+
+    int getSumSalaryOfDepartment(int id);
+
+    double getAverageSalaryOfDepartment(int id);
+
+    int getMaxSalaryOfDepartment(int id);
+
+    int getMinSalaryOfDepartment(int id);
 }

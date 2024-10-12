@@ -7,9 +7,9 @@ public interface Repository<Storage> {
 
     int getNextId();
 
-    Storage save(Storage department);
+    Storage save(Storage entity);
 
-    Storage delete(Storage department);
+    Storage delete(Storage entity);
 
     Collection<Storage> findAll();
 

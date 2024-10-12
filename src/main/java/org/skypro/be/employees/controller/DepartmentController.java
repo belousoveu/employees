@@ -92,4 +92,32 @@ public class DepartmentController {
         model.addAttribute("employee", departmentService.getEmployeeWithMaxSalaryOfDepartment(id));
         return "employeeData";
     }
+
+    @GetMapping("{id}/sum")
+    public String viewSumSalaryOfDepartment(@PathVariable("id") Integer id, Model model) {
+        model.addAttribute("department", departmentService.findDepartmentById(id));
+        model.addAttribute("sumSalary", departmentService.getSumSalaryOfDepartment(id));
+        return "salary-info";
+    }
+
+    @GetMapping("{id}/average")
+    public String viewAverageSalaryOfDepartment(@PathVariable("id") Integer id, Model model) {
+        model.addAttribute("department", departmentService.findDepartmentById(id));
+        model.addAttribute("averageSalary", departmentService.getAverageSalaryOfDepartment(id));
+        return "salary-info";
+    }
+
+    @GetMapping("{id}/max")
+    public String viewMaxSalaryOfDepartment(@PathVariable("id") Integer id, Model model) {
+        model.addAttribute("department", departmentService.findDepartmentById(id));
+        model.addAttribute("maxSalary", departmentService.getMaxSalaryOfDepartment(id));
+        return "salary-info";
+    }
+
+    @GetMapping("{id}/min")
+    public String viewMinSalaryOfDepartment(@PathVariable("id") Integer id, Model model) {
+        model.addAttribute("department", departmentService.findDepartmentById(id));
+        model.addAttribute("minSalary", departmentService.getMinSalaryOfDepartment(id));
+        return "salary-info";
+    }
 }
