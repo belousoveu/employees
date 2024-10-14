@@ -1,21 +1,25 @@
-package org.skypro.be.employees.repository;
+package org.skypro.be.employees.entity;
+
+import lombok.Data;
 
 import java.util.Objects;
 
+@Data
 public class Employee {
-    private static long currentId = 0;
-    private final Long id;
+    private int id;
     private String firstName;
     private String lastName;
     private String email;
     private Gender gender;
     private int age;
     private int salary;
-    private Long departmentId;
+    private int departmentId;
 
+    public Employee() {
+    }
 
     private Employee(Builder builder) {
-        this.id = ++currentId;
+        this.id = builder.id;
         this.firstName = builder.firstName;
         this.lastName = builder.lastName;
         this.email = builder.email;
@@ -25,8 +29,8 @@ public class Employee {
         this.departmentId = builder.departmentId;
     }
 
-    public static Builder builder(String firstName, String lastName) {
-        return new Builder(firstName, lastName);
+    public static Builder builder(int id, String firstName, String lastName) {
+        return new Builder(id, firstName, lastName);
     }
 
     @Override
@@ -47,80 +51,22 @@ public class Employee {
         return this.getFullName();
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public Gender getGender() {
-        return gender;
-    }
-
-    public void setGender(Gender gender) {
-        this.gender = gender;
-    }
-
-    public int getAge() {
-        return age;
-    }
-
-    public void setAge(int age) {
-        this.age = age;
-    }
-
-    public int getSalary() {
-        return salary;
-    }
-
-    public void setSalary(int salary) {
-        this.salary = salary;
-    }
-
-    public Long getDepartmentId() {
-        return departmentId;
-    }
-
-    public void setDepartmentId(Long departmentId) {
-        this.departmentId = departmentId;
-    }
-
     public String getFullName() {
         return lastName + " " + firstName;
     }
 
     public static class Builder {
+        private final int id;
         private final String firstName;
         private final String lastName;
         private String email;
         private Gender gender;
         private int age;
         private int salary;
-        private Long departmentId;
+        private int departmentId;
 
-        public Builder(String firstName, String lastName) {
+        public Builder(int id, String firstName, String lastName) {
+            this.id = id;
             this.firstName = firstName;
             this.lastName = lastName;
         }
@@ -145,7 +91,7 @@ public class Employee {
             return this;
         }
 
-        public Builder departmentId(Long departmentId) {
+        public Builder departmentId(int departmentId) {
             this.departmentId = departmentId;
             return this;
         }

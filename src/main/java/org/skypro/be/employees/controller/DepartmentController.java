@@ -1,7 +1,8 @@
 package org.skypro.be.employees.controller;
 
 import jakarta.validation.Valid;
-import org.skypro.be.employees.repository.DepartmentDto;
+import org.skypro.be.employees.entity.DepartmentDto;
+import org.skypro.be.employees.entity.MapperDepartment;
 import org.skypro.be.employees.service.DepartmentService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,7 +13,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @Controller
 @RequestMapping("/departments")
 public class DepartmentController {
-    DepartmentService departmentService;
+    private final DepartmentService departmentService;
 
     public DepartmentController(DepartmentService departmentService) {
         this.departmentService = departmentService;
@@ -41,9 +42,9 @@ public class DepartmentController {
     }
 
     @GetMapping("/{id}/edit")
-    public String editDepartmentPage(@PathVariable("id") Long id, Model model) {
-        DepartmentDto departmentDto = new DepartmentDto(departmentService.getDepartment(id));
-        model.addAttribute("department", departmentDto);
+    public String editDepartmentPage(@PathVariable("id") Integer id, Model model) {
+        DepartmentDto dto = MapperDepartment.toDto(departmentService.findDepartmentById(id));
+        model.addAttribute("department", dto);
         return "editDepartment";
     }
 
@@ -58,14 +59,14 @@ public class DepartmentController {
     }
 
     @GetMapping("/{id}/delete")
-    public String deleteDepartment(@PathVariable("id") Long id, RedirectAttributes redirectAttributes) {
-        redirectAttributes.addFlashAttribute("deletedDepartment", departmentService.deleteDepartment(id));
+    public String deleteDepartment(@PathVariable("id") Integer id, RedirectAttributes redirectAttributes) {
+        redirectAttributes.addFlashAttribute("deletedDepartment", departmentService.deleteDepartmentById(id));
         return "redirect:/departments";
     }
 
     @GetMapping("/{id}/employees")
-    public String viewEmployeesOfDepartment(@PathVariable("id") Long id, Model model) {
-        model.addAttribute("department", departmentService.getDepartment(id));
+    public String viewEmployeesOfDepartment(@PathVariable("id") Integer id, Model model) {
+        model.addAttribute("department", departmentService.findDepartmentById(id));
         model.addAttribute("employees", departmentService.getEmployeesOfDepartment(id));
         return "employeesOfDepartment";
     }
@@ -77,18 +78,46 @@ public class DepartmentController {
     }
 
     @GetMapping("/{id}/min-salary")
-    public String viewEmployeeWithMinSalaryOfDepartment(@PathVariable("id") Long id, Model model) {
+    public String viewEmployeeWithMinSalaryOfDepartment(@PathVariable("id") Integer id, Model model) {
         model.addAttribute("minSalary", true);
-        model.addAttribute("department", departmentService.getDepartment(id));
+        model.addAttribute("department", departmentService.findDepartmentById(id));
         model.addAttribute("employee", departmentService.getEmployeeWithMinSalaryOfDepartment(id));
         return "employeeData";
     }
 
     @GetMapping("/{id}/max-salary")
-    public String viewEmployeeWithMaxSalaryOfDepartment(@PathVariable("id") Long id, Model model) {
+    public String viewEmployeeWithMaxSalaryOfDepartment(@PathVariable("id") Integer id, Model model) {
         model.addAttribute("maxSalary", true);
-        model.addAttribute("department", departmentService.getDepartment(id));
+        model.addAttribute("department", departmentService.findDepartmentById(id));
         model.addAttribute("employee", departmentService.getEmployeeWithMaxSalaryOfDepartment(id));
         return "employeeData";
+    }
+
+    @GetMapping("{id}/sum")
+    public String viewSumSalaryOfDepartment(@PathVariable("id") Integer id, Model model) {
+        model.addAttribute("department", departmentService.findDepartmentById(id));
+        model.addAttribute("sumSalary", departmentService.getSumSalaryOfDepartment(id));
+        return "salary-info";
+    }
+
+    @GetMapping("{id}/average")
+    public String viewAverageSalaryOfDepartment(@PathVariable("id") Integer id, Model model) {
+        model.addAttribute("department", departmentService.findDepartmentById(id));
+        model.addAttribute("averageSalary", departmentService.getAverageSalaryOfDepartment(id));
+        return "salary-info";
+    }
+
+    @GetMapping("{id}/max")
+    public String viewMaxSalaryOfDepartment(@PathVariable("id") Integer id, Model model) {
+        model.addAttribute("department", departmentService.findDepartmentById(id));
+        model.addAttribute("maxSalary", departmentService.getMaxSalaryOfDepartment(id));
+        return "salary-info";
+    }
+
+    @GetMapping("{id}/min")
+    public String viewMinSalaryOfDepartment(@PathVariable("id") Integer id, Model model) {
+        model.addAttribute("department", departmentService.findDepartmentById(id));
+        model.addAttribute("minSalary", departmentService.getMinSalaryOfDepartment(id));
+        return "salary-info";
     }
 }

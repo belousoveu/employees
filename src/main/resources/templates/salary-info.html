@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>DataOfEmployee</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+<body>
+<h1 th:text="${'Сведения о заработной плате по отделу: ' + department}"></h1>
+<br>
+<div th:if="${sumSalary!=null}">
+    <p th:text="${'Общая сумма зарплаты по отделу: ' + #numbers.formatCurrency(sumSalary)}"></p>
+</div>
+<div th:if="${maxSalary!=null}">
+    <p th:text="${'Максимальная зарплата по отделу: ' + #numbers.formatCurrency(maxSalary)}"></p>
+</div>
+<div th:if="${minSalary!=null}">
+    <p th:text="${'Минимальная зарплата по отделу: ' + #numbers.formatCurrency(minSalary)}"></p>
+</div>
+<div th:if="${averageSalary!=null}">
+    <p th:text="${'Среданная зарплата по отделу: ' + #numbers.formatCurrency(averageSalary)}"></p>
+</div>
+
+<br>
+<h6><a th:href="@{/employees}">Список сотрудников</a></h6>
+<h6><a th:href="@{/departments}">Список отделов</a></h6>
+<h6><a th:href="@{/}">Вернуться на главную</a></h6>
+
+</body>
+</html>

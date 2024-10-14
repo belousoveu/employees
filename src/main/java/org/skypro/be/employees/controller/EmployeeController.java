@@ -1,9 +1,9 @@
 package org.skypro.be.employees.controller;
 
 import jakarta.validation.Valid;
-import org.skypro.be.employees.repository.Employee;
-import org.skypro.be.employees.repository.EmployeeDto;
-import org.skypro.be.employees.repository.Gender;
+import org.skypro.be.employees.entity.Employee;
+import org.skypro.be.employees.entity.EmployeeDto;
+import org.skypro.be.employees.entity.Gender;
 import org.skypro.be.employees.service.DepartmentService;
 import org.skypro.be.employees.service.EmployeeService;
 import org.springframework.stereotype.Controller;
@@ -23,7 +23,6 @@ public class EmployeeController {
         this.departmentService = departmentService;
     }
 
-
     @GetMapping("")
     public String viewEmployees(Model model) {
         model.addAttribute("employees", employeeService.getEmployees());
@@ -40,34 +39,34 @@ public class EmployeeController {
     }
 
     @PostMapping("/save")
-    public String saveEmployee(@Valid @ModelAttribute("employee") EmployeeDto employee,
+    public String saveEmployee(@Valid @ModelAttribute("employee") EmployeeDto dto,
                                BindingResult bindingResult, RedirectAttributes redirectAttributes, Model model) {
         if (bindingResult.hasErrors()) {
-            model.addAttribute("employee", employee);
+            model.addAttribute("employee", dto);
             model.addAttribute("genders", Gender.values());
             model.addAttribute("departments", departmentService.getDepartments());
             return "newEmployee";
         }
-        if (employee.getId() == null) {
-            Employee resultEmployee = employeeService.addEmployee(employee);
-            redirectAttributes.addFlashAttribute("newEmployee", resultEmployee);
+        if (dto.getId() == 0) {
+            Employee employee = employeeService.addEmployee(dto);
+            redirectAttributes.addFlashAttribute("newEmployee", employee);
         } else {
-            Employee resultEmployee = employeeService.updateEmployee(employee);
+            Employee resultEmployee = employeeService.updateEmployee(dto);
             redirectAttributes.addFlashAttribute("updatedEmployee", resultEmployee);
         }
         return "redirect:/employees";
     }
 
     @GetMapping("/{id}")
-    public String viewEmployee(@PathVariable Long id, Model model) {
+    public String viewEmployee(@PathVariable Integer id, Model model) {
         Employee employee = employeeService.getEmployeeById(id);
         model.addAttribute("employee", employee);
-        model.addAttribute("department", departmentService.getDepartment(employee.getDepartmentId()));
+        model.addAttribute("department", departmentService.findDepartmentById(employee.getDepartmentId()));
         return "employeeData";
     }
 
     @GetMapping("/{id}/edit")
-    public String editEmployee(@PathVariable Long id, Model model) {
+    public String editEmployee(@PathVariable Integer id, Model model) {
         model.addAttribute("title", "Редактирование данных сотрудника");
         model.addAttribute("employee", employeeService.getEmployeeById(id));
         model.addAttribute("genders", Gender.values());
@@ -76,8 +75,8 @@ public class EmployeeController {
     }
 
     @GetMapping("/{id}/delete")
-    public String deleteEmployee(@PathVariable Long id, RedirectAttributes redirectAttributes) {
-        Employee deletedEmployee = employeeService.deleteEmployee(id);
+    public String deleteEmployee(@PathVariable Integer id, RedirectAttributes redirectAttributes) {
+        Employee deletedEmployee = employeeService.deleteEmployeeById(id);
         redirectAttributes.addFlashAttribute("deletedEmployee", deletedEmployee);
         return "redirect:/employees";
     }

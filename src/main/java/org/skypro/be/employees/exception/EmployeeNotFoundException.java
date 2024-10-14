@@ -6,7 +6,7 @@ public class EmployeeNotFoundException extends RuntimeException {
         super("Сотрудник " + firstName + " " + lastName + " не найден");
     }
 
-    public EmployeeNotFoundException(Long id) {
+    public EmployeeNotFoundException(int id) {
         super("Сотрудник с id " + id + " не найден");
     }
 

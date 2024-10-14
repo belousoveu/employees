@@ -1,14 +1,15 @@
 package org.skypro.be.employees.service;
 
-import jakarta.annotation.PostConstruct;
+import org.skypro.be.employees.entity.Department;
+import org.skypro.be.employees.entity.DepartmentDto;
+import org.skypro.be.employees.entity.Employee;
+import org.skypro.be.employees.entity.MapperDepartment;
 import org.skypro.be.employees.exception.DepartmentNotFoundException;
 import org.skypro.be.employees.exception.UnableDepartmentDeleteException;
-import org.skypro.be.employees.repository.Department;
-import org.skypro.be.employees.repository.DepartmentDto;
-import org.skypro.be.employees.repository.Employee;
+import org.skypro.be.employees.repository.Repository;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -18,62 +19,45 @@ import static java.util.Comparator.comparing;
 
 @Service
 public class DepartmentServiceImp implements DepartmentService {
-    static Map<Long, Department> departments = new HashMap<>();
     private final EmployeeService employeeService;
+    private final Repository<Department> repository;
 
-    public DepartmentServiceImp(EmployeeService employeeService) {
+    public DepartmentServiceImp(EmployeeService employeeService, Repository<Department> repository) {
         this.employeeService = employeeService;
-    }
-
-    @PostConstruct
-    public void init() {
-        departments.put(1L, new Department("Администрация"));
-        departments.put(2L, new Department("Отдел разработки"));
-        departments.put(3L, new Department("Отдел продаж"));
-        departments.put(4L, new Department("Отдел сопровождения"));
+        this.repository = repository;
     }
 
     @Override
-    public Department addDepartment(DepartmentDto department) {
-        Department newDepartment = new Department(department.getName());
-        departments.put(newDepartment.getId(), newDepartment);
-        return newDepartment;
+    public Department addDepartment(DepartmentDto dto) {
+        dto.setId(repository.getNextId());
+        return repository.save(MapperDepartment.toEntity(dto));
     }
 
     @Override
-    public Department deleteDepartment(Long id) {
-        if (validateDelete(id)) {
-            Department deletedDepartment = getDepartment(id);
-            departments.remove(id);
-            return deletedDepartment;
+    public Department deleteDepartmentById(int id) {
+        if (!isPossibleDelete(id)) {
+            throw new UnableDepartmentDeleteException("Unable to delete department with id: " + id + " because it has employees");
         }
-        throw new UnableDepartmentDeleteException("В отделе есть сотрудники. Невозможно удалить отдел");
-    }
-
-    private boolean validateDelete(Long id) {
-        return employeeService.getEmployees().stream()
-                .noneMatch(employee -> Objects.equals(employee.getDepartmentId(), id));
+        return repository.delete(findDepartmentById(id));
     }
 
     @Override
-    public Department updateDepartment(DepartmentDto department) {
-        Long targetId = department.getId();
-        departments.get(targetId).setName(department.getName());
-        return getDepartment(targetId);
+    public Department updateDepartment(DepartmentDto dto) {
+        return repository.save(MapperDepartment.toEntity(dto));
     }
 
     @Override
-    public List<Department> getDepartments() {
-        return departments.values().stream().toList();
+    public Collection<Department> getDepartments() {
+        return repository.findAll();
     }
 
     @Override
-    public Department getDepartment(Long id) {
-        return departments.get(id);
+    public Department findDepartmentById(int id) {
+        return repository.findById(id).orElseThrow(() -> new DepartmentNotFoundException("Department with id " + id + " not found"));
     }
 
     @Override
-    public List<Employee> getEmployeesOfDepartment(Long id) {
+    public List<Employee> getEmployeesOfDepartment(int id) {
         return employeeService.getEmployees().stream()
                 .filter(employee -> Objects.equals(employee.getDepartmentId(), id))
                 .toList();
@@ -81,24 +65,57 @@ public class DepartmentServiceImp implements DepartmentService {
 
     @Override
     public Map<String, List<Employee>> getEmployeesByDepartments() {
-        return departments.values().stream()
+        return repository.findAll().stream()
                 .collect(Collectors.toMap(Department::getName, department -> getEmployeesOfDepartment(department.getId())));
     }
 
     @Override
-    public Employee getEmployeeWithMinSalaryOfDepartment(Long id) {
+    public Employee getEmployeeWithMinSalaryOfDepartment(int id) {
         return employeeService.getEmployees().stream()
                 .filter(employee -> Objects.equals(employee.getDepartmentId(), id))
                 .min(comparing(Employee::getSalary))
-                .orElseThrow(() -> new DepartmentNotFoundException("Отдел не найден"));
+                .orElseThrow(() -> new DepartmentNotFoundException("Department with id " + id + " not found"));
     }
 
     @Override
-    public Employee getEmployeeWithMaxSalaryOfDepartment(Long id) {
+    public Employee getEmployeeWithMaxSalaryOfDepartment(int id) {
         return employeeService.getEmployees().stream()
                 .filter(employee -> Objects.equals(employee.getDepartmentId(), id))
                 .max(comparing(Employee::getSalary))
-                .orElseThrow(() -> new DepartmentNotFoundException("Отдел не найден"));
+                .orElseThrow(() -> new DepartmentNotFoundException("Department with id " + id + " not found"));
+    }
+
+    @Override
+    public int getSumSalaryOfDepartment(int id) {
+        return getEmployeesOfDepartment(id).stream()
+                .mapToInt(Employee::getSalary).sum();
+    }
+
+    @Override
+    public double getAverageSalaryOfDepartment(int id) {
+        getEmployeesOfDepartment(id);
+        return getEmployeesOfDepartment(id).stream()
+                .mapToInt(Employee::getSalary).average()
+                .orElse(0.0);
+    }
+
+    @Override
+    public int getMaxSalaryOfDepartment(int id) {
+        return getEmployeesOfDepartment(id).stream()
+                .mapToInt(Employee::getSalary).max()
+                .orElse(0);
+    }
+
+    @Override
+    public int getMinSalaryOfDepartment(int id) {
+        return getEmployeesOfDepartment(id).stream()
+                .mapToInt(Employee::getSalary).min()
+                .orElse(0);
+    }
+
+    private boolean isPossibleDelete(int id) {
+        return employeeService.getEmployees().stream()
+                .noneMatch(employee -> Objects.equals(employee.getDepartmentId(), id));
     }
 
 }
