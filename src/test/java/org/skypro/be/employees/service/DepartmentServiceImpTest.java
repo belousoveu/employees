@@ -39,7 +39,6 @@ class DepartmentServiceImpTest {
         int currentId = 0;
         departments = new HashMap<>();
         employees = new HashMap<>();
-//        out = new DepartmentServiceImp(employeeService, repository);
         List<String> departmentsNames = List.of("Администрация", "Отдел разработки", "Отдел продаж", "Отдел сопровождения");
         for (String name : departmentsNames) {
             Department department = new Department();

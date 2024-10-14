@@ -7,6 +7,7 @@ import org.skypro.be.employees.entity.Department;
 import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.anyString;
 
 class DepartmentStorageTest {
 
@@ -75,5 +76,6 @@ class DepartmentStorageTest {
 
     @Test
     void findByFirstNameAndLastName() {
+        assertThrows(UnsupportedOperationException.class, () -> out.findByFirstNameAndLastName(anyString(), anyString()));
     }
 }

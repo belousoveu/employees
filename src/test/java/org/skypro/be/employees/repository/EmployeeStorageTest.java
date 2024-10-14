@@ -23,7 +23,7 @@ class EmployeeStorageTest {
 
     @Test
     void testSave() {
-        Employee newEmployee = Employee.builder(1, "Петр", "Петров").age(34).departmentId(3).salary(115_000).build();
+        Employee newEmployee = getNewEmployee();
         Employee savedEmployee = out.save(newEmployee);
 
         assertNotNull(savedEmployee);
@@ -51,7 +51,7 @@ class EmployeeStorageTest {
 
     @Test
     void testFindByFirstNameAndLastNameWhenExist() {
-        Employee newEmployee = Employee.builder(1, "Петр", "Петров").age(34).departmentId(3).salary(115_000).build();
+        Employee newEmployee = getNewEmployee();
         out.save(newEmployee);
         Optional<Employee> employee = out.findByFirstNameAndLastName("Петр", "Петров");
         assertTrue(employee.isPresent());
@@ -59,7 +59,7 @@ class EmployeeStorageTest {
 
     @Test
     void testFindByFirstNameAndLastNameWhenNotExist() {
-        Employee newEmployee = Employee.builder(1, "Петр", "Петров").age(34).departmentId(3).salary(115_000).build();
+        Employee newEmployee = getNewEmployee();
         out.save(newEmployee);
         Optional<Employee> employee = out.findByFirstNameAndLastName("Петр", "Иванов");
         assertFalse(employee.isPresent());
@@ -67,7 +67,7 @@ class EmployeeStorageTest {
 
     @Test
     void delete() {
-        Employee employee = Employee.builder(1, "Петр", "Петров").age(34).departmentId(3).salary(115_000).build();
+        Employee employee = getNewEmployee();
         Employee savedEmployee = out.save(employee);
         Employee deletedEmployee = out.delete(savedEmployee);
 
@@ -78,7 +78,7 @@ class EmployeeStorageTest {
 
     @Test
     void findById() {
-        Employee newEmployee = Employee.builder(1, "Петр", "Петров").age(34).departmentId(3).salary(115_000).build();
+        Employee newEmployee = getNewEmployee();
         out.save(newEmployee);
         Optional<Employee> employee = out.findById(1);
         assertTrue(employee.isPresent());
@@ -102,5 +102,9 @@ class EmployeeStorageTest {
         Collection<Employee> employeeCollection = out.findAll();
         Collection<Employee> expectedEmployeeCollection = Collections.unmodifiableCollection(employees.values());
         assertIterableEquals(expectedEmployeeCollection, employeeCollection);
+    }
+
+    private Employee getNewEmployee() {
+        return Employee.builder(1, "Петр", "Петров").age(34).departmentId(3).salary(115_000).build();
     }
 }
